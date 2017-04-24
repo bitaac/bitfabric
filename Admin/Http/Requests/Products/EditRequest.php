@@ -9,7 +9,7 @@ class EditRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'       => ['required', 'max:100', 'unique:__bitaac_store_products'],
+            'title'       => ['required', 'max:100'],
             'item_id'     => ['required', 'integer'],
             'amount'      => ['required'],
             'points'      => ['required'],
