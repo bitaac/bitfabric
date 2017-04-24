@@ -4,7 +4,7 @@ namespace Bitaac\Player\Models;
 
 use Bitaac\Core\Database\Eloquent\Model;
 
-class BitPlayer extends Model
+class BitaacPlayer extends Model
 {
     /**
      * Table used by the model.

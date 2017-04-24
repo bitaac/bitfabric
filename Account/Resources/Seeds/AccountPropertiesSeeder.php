@@ -21,9 +21,9 @@ class AccountPropertiesSeeder extends Seeder
                 continue;
             }
 
-            $accounts = new BitaacAccount;
-            $accounts->account_id = $account->id;
-            $accounts->save();
+            $bitaccount = new BitaacAccount;
+            $bitaccount->account_id = $account->id;
+            $bitaccount->save();
         }
     }
 }

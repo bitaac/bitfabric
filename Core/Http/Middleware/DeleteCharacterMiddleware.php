@@ -3,7 +3,7 @@
 namespace Bitaac\Core\Http\Middleware;
 
 use Closure;
-use Bitaac\Player\Models\BitPlayer;
+use Bitaac\Player\Models\BitaacPlayer;
 
 class DeleteCharacterMiddleware
 {
@@ -17,7 +17,7 @@ class DeleteCharacterMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        $characters = BitPlayer::where(function ($query) {
+        $characters = BitaacPlayer::where(function ($query) {
             $query->where('deletion_time', '<', time());
             $query->where('deletion_time', '>', 0);
         })->get();
