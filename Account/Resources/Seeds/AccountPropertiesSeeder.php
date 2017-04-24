@@ -3,7 +3,7 @@
 namespace Bitaac\Account\Resources\Seeds;
 
 use Illuminate\Database\Seeder;
-use Bitaac\Account\Models\BitAccount;
+use Bitaac\Account\Models\BitaacAccount;
 
 class AccountPropertiesSeeder extends Seeder
 {
@@ -21,9 +21,9 @@ class AccountPropertiesSeeder extends Seeder
                 continue;
             }
 
-            $bitaccounts = new BitAccount;
-            $bitaccounts->account_id = $account->id;
-            $bitaccounts->save();
+            $accounts = new BitaacAccount;
+            $accounts->account_id = $account->id;
+            $accounts->save();
         }
     }
 }

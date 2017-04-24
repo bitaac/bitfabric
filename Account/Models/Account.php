@@ -79,13 +79,13 @@ class Account extends Model implements Contract
     }
 
     /**
-     * Return related BitAccount.
+     * Return related BitaacAccount.
      *
-     * @return Bitaac\Account\BitAccount
+     * @return Bitaac\Account\BitaacAccount
      */
     public function bit()
     {
-        return $this->hasOne('Bitaac\Account\Models\BitAccount', 'account_id', 'id');
+        return $this->hasOne('Bitaac\Account\Models\BitaacAccount', 'account_id', 'id');
     }
 
     /**
