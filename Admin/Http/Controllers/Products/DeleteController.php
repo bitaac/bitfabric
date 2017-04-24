@@ -28,6 +28,6 @@ class DeleteController extends Controller
     {
         $product->delete();
 
-        return redirect('/admin/products')->withSuccess('Your product has been deleted.');
+        return redirect(route('admin.products'))->withSuccess('Your product has been deleted.');
     }
 }

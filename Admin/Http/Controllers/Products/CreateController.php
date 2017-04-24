@@ -34,6 +34,6 @@ class CreateController extends Controller
         $product->description = $request->get('description');
         $product->save();
 
-        return redirect('/admin/products')->withSuccess('Your product has been added.');
+        return redirect(route('admin.products'))->withSuccess('Your product has been added.');
     }
 }

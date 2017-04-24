@@ -35,6 +35,6 @@ class EditController extends Controller
         $product->description = $request->get('description');
         $product->save();
 
-        return redirect('/admin/products')->withSuccess('Your changes were saved.');
+        return redirect(route('admin.product.edit', $product))->withSuccess('Your changes were saved.');
     }
 }

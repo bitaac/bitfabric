@@ -10,7 +10,7 @@
 
 $router->group(['prefix' => '/store'], function ($router) {
     $router->get('/', 'StoreController@index');
-    $router->get('/claim/{product}', 'ClaimController@form')->middleware(['auth', 'can.claim']);
+    $router->name('store.claim')->get('/claim/{product}', 'ClaimController@form')->middleware(['auth', 'can.claim']);
     $router->post('/claim/{product}', 'ClaimController@post')->middleware(['auth', 'can.claim']);
     $router->get('/offers', 'Offer\OfferController@index');
     $router->get('/offers/{gateway}', 'Offer\PaymentController@index');
@@ -27,15 +27,7 @@ $router->group(['prefix' => '/store'], function ($router) {
 |
 */
 
-$router->bind('product', function ($product) {
-    $product = app('store.product')->where('title', str_replace('-', ' ', $product));
-
-    if (! $product->exists()) {
-        throw new Bitaac\Store\Exceptions\NotFoundProductException;
-    }
-
-    return $product->first();
-});
+$router->model('product', Bitaac\Contracts\StoreProduct::class);
 
 
 
