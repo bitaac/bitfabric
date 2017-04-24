@@ -21,7 +21,7 @@ class NotLockedMiddleware
 
         $account = auth()->user();
 
-        if ($thread->locked and $account->bit->admin == 0) {
+        if ($thread->locked and $account->bitaac->admin == 0) {
             return redirect($thread->link());
         }
 

@@ -17,7 +17,7 @@ class AccountPropertiesSeeder extends Seeder
         $accounts = app('account')->all();
 
         foreach ($accounts as $account) {
-            if ($account->bit) {
+            if ($account->bitaac) {
                 continue;
             }
 
