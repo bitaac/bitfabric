@@ -38,8 +38,8 @@ class ClaimController extends Controller
         $order->item_count = $product->item_count;
         $order->save();
 
-        $user->bit->points = $user->bit->points - $product->points;
-        $user->bit->save();
+        $user->bitaac->points = $user->bitaac->points - $product->points;
+        $user->bitaac->save();
 
         return redirect('/store')->withSuccess('Thanks for your purchase!');
     }

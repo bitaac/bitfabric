@@ -53,9 +53,9 @@ class EmailController extends Controller
 
         $updates = Carbon::now()->addSeconds($time)->toDateTimeString();
 
-        $user->bit->email_change_time = strtotime($updates);
-        $user->bit->email_change_new = $request->get('email');
-        $user->bit->save();
+        $user->bitaac->email_change_time = strtotime($updates);
+        $user->bitaac->email_change_new = $request->get('email');
+        $user->bitaac->save();
 
         return back()->withSuccess('You have requested to change your email address to '.$request->get('email').'. The actual change will take place after '.$updates.', during which you can cancel the request at any time.');
     }
