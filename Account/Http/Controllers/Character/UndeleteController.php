@@ -27,8 +27,8 @@ class UndeleteController extends Controller
      */
     public function post($player)
     {
-        $player->bit->deletion_time = 0;
-        $player->bit->save();
+        $player->bitaac->deletion_time = 0;
+        $player->bitaac->save();
 
         return redirect('/account')->withSuccess("Character {$player->name} has been undeleted.");
     }

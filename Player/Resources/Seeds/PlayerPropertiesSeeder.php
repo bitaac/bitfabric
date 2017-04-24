@@ -3,7 +3,7 @@
 namespace Bitaac\Player\Resources\Seeds;
 
 use Illuminate\Database\Seeder;
-use Bitaac\Player\Models\BitPlayer;
+use Bitaac\Player\Models\BitaacPlayer;
 
 class PlayerPropertiesSeeder extends Seeder
 {
@@ -17,11 +17,11 @@ class PlayerPropertiesSeeder extends Seeder
         $players = app('player')->all();
 
         foreach ($players as $player) {
-            if ($player->bit) {
+            if ($player->bitaac) {
                 continue;
             }
 
-            $bitplayer = new BitPlayer;
+            $bitplayer = new BitaacPlayer;
             $bitplayer->player_id = $player->id;
             $bitplayer->save();
         }

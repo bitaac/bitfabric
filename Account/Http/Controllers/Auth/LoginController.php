@@ -46,7 +46,6 @@ class LoginController extends Controller
         }
 
         $user = $user->first();
-        $bitaac = $user->bit;
 
         if ($user->secret && config('account.two-factor')) {
             if ($request->get('2fa') == '') {
@@ -59,7 +58,7 @@ class LoginController extends Controller
             }
         }
 
-        $bitaac->updateLastLogin();
+        $user->bitaac->updateLastLogin();
         $this->auth->loginUsingId($user->id);
 
         return redirect('/account')->withSuccess('You have been logged in.');
