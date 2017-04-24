@@ -30,7 +30,7 @@ class Account extends Model implements Contract
      */
     public function birthday()
     {
-        return ($this->creation) ? $this->creation : strtotime($this->bit->created_at);
+        return ($this->creation) ? $this->creation : strtotime($this->bitaac->created_at);
     }
 
     /**
@@ -40,7 +40,7 @@ class Account extends Model implements Contract
      */
     public function hasPendingEmail()
     {
-        return (bool) $this->bit->email_change_new;
+        return (bool) $this->bitaac->email_change_new;
     }
 
     /**
@@ -50,7 +50,7 @@ class Account extends Model implements Contract
      */
     public function getPendingEmail()
     {
-        return (string) $this->bit->email_change_new;
+        return (string) $this->bitaac->email_change_new;
     }
 
     /**
@@ -60,7 +60,7 @@ class Account extends Model implements Contract
      */
     public function getPendingEmailTime()
     {
-        return Carbon::createFromTimestamp($this->bit->email_change_time);
+        return Carbon::createFromTimestamp($this->bitaac->email_change_time);
     }
 
     /**
@@ -73,9 +73,9 @@ class Account extends Model implements Contract
         $this->email = $this->getPendingEmail();
         $this->save();
 
-        $this->bit->email_change_time = null;
-        $this->bit->email_change_new = null;
-        $this->bit->save();
+        $this->bitaac->email_change_time = null;
+        $this->bitaac->email_change_new = null;
+        $this->bitaac->save();
     }
 
     /**
@@ -83,7 +83,7 @@ class Account extends Model implements Contract
      *
      * @return Bitaac\Account\BitaacAccount
      */
-    public function bit()
+    public function bitaac()
     {
         return $this->hasOne('Bitaac\Account\Models\BitaacAccount', 'account_id', 'id');
     }
@@ -105,7 +105,7 @@ class Account extends Model implements Contract
      */
     public function isAdmin()
     {
-        return (bool) $this->bit->admin;
+        return (bool) $this->bitaac->admin;
     }
 
     /**

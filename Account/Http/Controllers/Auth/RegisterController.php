@@ -46,7 +46,7 @@ class RegisterController extends Controller
             return back();
         }
 
-        $bitaac = $account->bit;
+        $bitaac = $account->bitaac;
         $bitaac->generateSecret();
         $bitaac->updateLastLogin();
 
