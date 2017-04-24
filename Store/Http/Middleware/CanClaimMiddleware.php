@@ -17,7 +17,7 @@ class CanClaimMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($request->user()->bit->points < $request->product->points) {
+        if ($request->user()->bitaac->points < $request->product->points) {
             return redirect('/store');
         }
         
