@@ -6,7 +6,7 @@ use Google2FA;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class BitAccount extends Model
+class BitaacAccount extends Model
 {
     /**
      * Table used by the model.

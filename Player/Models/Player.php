@@ -26,7 +26,7 @@ class Player extends Model implements Contract
     /**
      * Determine if the player is hidden.
      *
-     * @return BitPlayer
+     * @return BitaacPlayer
      */
     public function isHidden()
     {
@@ -34,13 +34,13 @@ class Player extends Model implements Contract
     }
 
     /**
-     * Get the BitPlayer associated with the current player.
+     * Get the BitaacPlayer associated with the current player.
      *
-     * @return BitPlayer
+     * @return BitaacPlayer
      */
     public function bitaac()
     {
-        return $this->hasOne('Bitaac\Player\Models\BitPlayer', 'player_id');
+        return $this->hasOne('Bitaac\Player\Models\BitaacPlayer', 'player_id');
     }
 
     /**

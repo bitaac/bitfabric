@@ -19,7 +19,7 @@ class EmailUpdateMiddleware
     {
         $user = auth()->user();
 
-        if ($user->hasPendingEmail() && time() > $user->bit->email_change_time) {
+        if ($user->hasPendingEmail() && time() > $user->bitaac->email_change_time) {
             $user->updateEmailWithPending();
         }
 

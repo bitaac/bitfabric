@@ -53,7 +53,7 @@ class AuthenticationController extends Controller
         $secret = $request->get('secret');
 
         try {
-            $valid = \Google2FA::verifyKey($user->bit->secret, $secret);
+            $valid = \Google2FA::verifyKey($user->bitaac->secret, $secret);
         } catch (InvalidCharactersException $e) {
             return back()->withErrors([
                 'secret' => 'Invalid secret key.',
@@ -70,7 +70,7 @@ class AuthenticationController extends Controller
 
             return back()->withSuccess(trans('authentication.disable.success'));
         } else {
-            $user->secret = $user->bit->secret;
+            $user->secret = $user->bitaac->secret;
             $user->save();
 
             return back()->withSuccess(trans('authentication.enable.success'));
