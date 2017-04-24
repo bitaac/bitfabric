@@ -9,7 +9,7 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'       => ['required', 'max:100', 'alpha_space', 'unique:__bitaac_store_products'],
+            'title'       => ['required', 'max:100', 'alpha_space'],
             'item_id'     => ['required', 'integer'],
             'amount'      => ['required'],
             'points'      => ['required'],
