@@ -26,6 +26,6 @@ class HighscoreServiceProvider extends AggregateServiceProvider
 
         $this->publishes([
             __DIR__.'/Resources/Config' => config_path('bitaac'),
-        ], 'config');
+        ], 'bitaac:config');
     }
 }
