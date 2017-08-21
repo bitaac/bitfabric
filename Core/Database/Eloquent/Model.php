@@ -196,7 +196,7 @@ class Model extends Eloquent
      */
     public function hasManyThrough($related, $through, $firstKey = null, $secondKey = null, $localKey = null, $secondLocalKey = null)
     {
-        $through = new $through;
+        $through = app($through);
 
         $firstKey = $firstKey ?: $this->getForeignKey();
 
