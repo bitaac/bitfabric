@@ -100,6 +100,6 @@ class BitfabricServiceProvider extends AggregateServiceProvider
 
         $this->publishes([
             __DIR__.'/../Config' => config_path('bitaac'),
-        ], 'config');
+        ], 'bitaac:config');
     }
 }
