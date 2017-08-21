@@ -9,9 +9,9 @@
 |
 */
 
-$router->get('/login', 'Auth\LoginController@form');
+$router->name('login')->get('/login', 'Auth\LoginController@form');
 $router->post('/login', 'Auth\LoginController@post');
-$router->get('/register', 'Auth\RegisterController@form');
+$router->name('register')->get('/register', 'Auth\RegisterController@form');
 $router->post('/register', 'Auth\RegisterController@post');
 
 /*
