@@ -67,7 +67,7 @@ class BitfabricServiceProvider extends AggregateServiceProvider
     public function register()
     {
         $this->app->register(\PragmaRX\Google2FA\Vendor\Laravel\ServiceProvider::class);
-        $this->app->register(\Barryvdh\Omnipay\ServiceProvider::class);
+        //$this->app->register(\Barryvdh\Omnipay\ServiceProvider::class);
         $this->app->register(\Seedster\SeedsterServiceProvider::class);
         $this->app->register(config('bitaac.app.theme', \Bitaac\Theme\RetroThemeServiceProvider::class));
         $this->app->register(config('bitaac.app.theme-admin', \Bitaac\ThemeAdmin\ThemeAdminServiceProvider::class));
