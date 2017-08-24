@@ -14,10 +14,14 @@ class ForumTablesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('__bitaac_forum_boards')->insert([
-            'title'       => 'Latest News',
-            'description' => 'Here you\'ll find all of our latest announcements.',
-            'news'        => 1,
-        ]);
+        $table = DB::table('__bitaac_forum_boards');
+
+        if (! $table->where('news', 1)->exists()) {
+            $table->insert([
+                'title'       => 'Latest News',
+                'description' => 'Here you\'ll find all of our latest announcements.',
+                'news'        => 1,
+            ]);
+        }
     }
 }
