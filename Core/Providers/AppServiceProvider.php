@@ -4,6 +4,7 @@ namespace Bitaac\Core\Providers;
 
 use Auth;
 use Validator;
+use Bitaac\Core\Console\Commands;
 
 class AppServiceProvider extends \App\Providers\AppServiceProvider
 {
@@ -19,6 +20,12 @@ class AppServiceProvider extends \App\Providers\AppServiceProvider
         view()->composer('*', function ($view) {
             $view->with('account', auth()->user());
         });
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Commands\MakeAdminCommand::class,
+            ]);
+        }
 
         include __DIR__.'/../validator.php';
     }
