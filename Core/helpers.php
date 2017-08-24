@@ -224,6 +224,18 @@ if (! function_exists('lines')) {
     }
 }
 
+if (! function_exists('server_path')) {
+    /**
+     * Get the server path.
+     *
+     * @param string $path
+     * @return mixed
+     */
+    function server_path($path = '') {
+        return config('bitaac.server.path').($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+}
+
 if (! function_exists('config_lua')) {
     /**
      * Get a config.lua value.
@@ -238,7 +250,9 @@ if (! function_exists('config_lua')) {
 
         if (is_null($config)) {
             try {
-                $config = collect(file(config('bitaac.server.config')));
+                $config = collect(file(
+                    server_path('config.lua')
+                ));
             } catch (Exception $e) {
                 return $default;
             }
