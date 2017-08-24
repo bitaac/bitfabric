@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyContentColumnToLongtext extends Migration
+class ModifyLastipColumnToBiginteger extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class ModifyContentColumnToLongtext extends Migration
     public function up()
     {
         Schema::table('__bitaac_forum_posts', function (Blueprint $table) {
-            $table->longText('content')->change();
+            $table->bigInteger('lastip')->change();
         });
     }
 
@@ -26,7 +26,7 @@ class ModifyContentColumnToLongtext extends Migration
     public function down()
     {
         Schema::table('__bitaac_forum_posts', function (Blueprint $table) {
-            $table->string('content')->change();
+            $table->integer('lastip')->change();
         });
     }
 }
