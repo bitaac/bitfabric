@@ -234,18 +234,22 @@ if (! function_exists('config_lua')) {
      */
     function config_lua($key, $default = '')
     {
-        $config = file(config('bitaac.server.config'));
+        static $config = null;
 
-        $new = '';
-
-        foreach ($config as $c) {
-            if (substr($c, 0, 2) == '--' or empty($c) or $c == '') {
-                continue;
+        if (is_null($config)) {
+            try {
+                $config = collect(file(config('bitaac.server.config')));
+            } catch (Exception $e) {
+                return $default;
             }
 
-            $new .= $c;
+            $config = parse_ini_string($config->map(function ($item, $index) {
+                return ltrim($item);
+            })->filter(function ($item, $index) {
+                return preg_match('/^([A-Za-z])+\s?=\s?\"?(.*?)+\"?/i', $item);
+            })->implode(''));
         }
 
-        return isset(parse_ini_string($new)[$key]) ? parse_ini_string($new)[$key] : $default;
+        return isset($config[$key]) ? $config[$key] : $default;
     }
 }
