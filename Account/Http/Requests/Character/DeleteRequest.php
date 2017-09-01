@@ -2,6 +2,7 @@
 
 namespace Bitaac\Account\Http\Requests\Character;
 
+use Bitaac\Core\Rules\OwnsCharacter;
 use Bitaac\Core\Foundation\Http\FormRequest;
 
 class DeleteRequest extends FormRequest
@@ -9,7 +10,7 @@ class DeleteRequest extends FormRequest
     public function rules()
     {
         return [
-            'character' => ['required', 'exists:players,name', 'owns_character'],
+            'character' => ['required', 'exists:players,name', new OwnsCharacter],
             'password'  => ['required'],
         ];
     }
