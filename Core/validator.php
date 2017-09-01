@@ -100,21 +100,6 @@ Validator::extend('charname', function ($attribute, $value, $parameters, $valida
 });
 
 /*
- * Determine if account owns the character
- *
- * @param string  $attribute
- * @param mixed   $value
- * @param array   $parameters
- * @param \Illuminate\Validation\Validator  $validator
- * @return boolean
- */
-Validator::extend('owns_character', function ($attribute, $value, $parameters, $validator) {
-    $characters = auth()->user()->characters();
-
-    return $characters->where(is_string($value) ? 'name' : 'id', $value)->exists();
-});
-
-/*
  * Make sure the value not contains more than images
  *
  * @param string  $attribute

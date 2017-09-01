@@ -2,6 +2,7 @@
 
 namespace Bitaac\Guild\Http\Requests\Guilds;
 
+use Bitaac\Core\Rules\OwnsCharacter;
 use Bitaac\Core\Foundation\Http\FormRequest;
 
 class CreateRequest extends FormRequest
@@ -15,7 +16,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'name'   => ['required', 'alpha_space', 'max_words:3', 'unique:guilds,name'],
-            'leader' => ['required', 'owns_character', 'guildless'],
+            'leader' => ['required', new OwnsCharacter, 'guildless'],
         ];
     }
 
