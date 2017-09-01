@@ -3,6 +3,7 @@
 namespace Bitaac\Forum\Http\Controllers\Thread;
 
 use Illuminate\Http\Request;
+use Bitaac\Core\Rules\OwnsCharacter;
 use App\Http\Controllers\Controller;
 
 class ReplyController extends Controller
@@ -32,8 +33,8 @@ class ReplyController extends Controller
     public function post(Request $request, $board, $thread)
     {
         $this->validate($request, [
-            'author'  => 'required|owns_character',
-            'content' => 'required|between:15,3000',
+            'author' => ['required', new OwnsCharacter],
+            'content' => ['required', 'between:15,3000'],
         ]);
 
         $thread->timestamp = time();

@@ -2,6 +2,7 @@
 
 namespace Bitaac\Guild\Http\Requests\Guild\Member;
 
+use Bitaac\Core\Rules\OwnsCharacter;
 use Bitaac\Core\Foundation\Http\FormRequest;
 
 class LeaveRequest extends FormRequest
@@ -14,7 +15,7 @@ class LeaveRequest extends FormRequest
     public function rules()
     {
         return [
-            'character' => ['required', 'integer', 'owns_character'],
+            'character' => ['required', 'integer', new OwnsCharacter],
         ];
     }
 
