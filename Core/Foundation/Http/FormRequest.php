@@ -16,7 +16,6 @@ class FormRequest extends Base
         return [
             'in_config_key'  => 'in_config_key validation error',
             'in_config'      => 'in_config validation error',
-            'owns_character' => 'The selected character do not belongs to your account.',
         ];
     }
 }
