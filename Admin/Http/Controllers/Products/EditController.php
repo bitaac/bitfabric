@@ -9,32 +9,43 @@ use Bitaac\Admin\Http\Requests\Products\EditRequest;
 class EditController extends Controller
 {
     /**
-     * Show add product form to user.
+     * Create a new controller instance.
      *
-     * @param  \Bitaac\Store\Models\StoreProduct  $product
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+    
+    /**
+     * Show the edit store product page.
+     *
+     * @param  \Bitaac\Contracts\StoreProduct $product
      * @return \Illuminate\Http\Response
      */
     public function form(StoreProduct $product)
     {
-        return view('admin::products.edit')->with(compact('product'));
+        return view('admin::products.edit')->with([
+            'product' => $product,
+        ]);
     }
 
     /**
-     * Handle add product request.
+     * Handle the edtir store product request.
      *
-     * @param  \Bitaac\Store\Models\StoreProduct                 $product
+     * @param  \Bitaac\Contracts\StoreProduct                    $product
      * @param  \Bitaac\Admin\Http\Requests\Products\EditRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function post(EditRequest $request, StoreProduct $product)
     {
-        $product->title = $request->get('title');
-        $product->item_id = $request->get('item_id');
-        $product->item_count = $request->get('amount');
-        $product->points = $request->get('points');
-        $product->description = $request->get('description');
-        $product->save();
+        $product->update($request->only([
+            'title', 'item_id', 'count', 'points', 'description'
+        ]));
 
-        return redirect(route('admin.product.edit', $product))->withSuccess('Your changes were saved.');
+        return redirect()->route('admin.product.edit', $product)->with([
+            'success' => 'Your changes were saved.',
+        ]);
     }
 }

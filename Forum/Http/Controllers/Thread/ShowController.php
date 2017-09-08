@@ -2,6 +2,8 @@
 
 namespace Bitaac\Forum\Http\Controllers\Thread;
 
+use Bitaac\Contracts\Forum\Post;
+use Bitaac\Contracts\Forum\Board;
 use App\Http\Controllers\Controller;
 
 class ShowController extends Controller
@@ -9,22 +11,22 @@ class ShowController extends Controller
     /**
      * Show the thread to user.
      *
-     * @param  \Bitaac\Forum\Board  $board
-     * @param  \Bitaac\Forum\Post   $thread
+     * @param  \Bitaac\Contracts\Forum\Board   $board
+     * @param  \Bitaac\Contracts\Forum\Post    $post
      * @return \Illuminate\Http\Response
      */
-    public function index($board, $thread)
+    public function index(Board $board, Post $post)
     {
-        $posts = $thread->replies()->paginate(10);
+        $posts = $post->replies()->paginate(10);
 
-        if ($thread->lastip != $ip = ip2long(request()->ip())) {
-            $thread->lastip = $ip;
-            $thread->views = $thread->views + 1;
-            $thread->save();
+        if ($post->lastip != $ip = ip2long(request()->ip())) {
+            $post->lastip = $ip;
+            $post->views = $post->views + 1;
+            $post->save();
         }
 
         return view('bitaac::forum.thread.show', [
-            'thread' => $thread,
+            'thread' => $post,
             'board'  => $board,
             'posts'  => $posts,
             'offset' => ($posts->currentPage() * $posts->perPage()) - $posts->perPage(),

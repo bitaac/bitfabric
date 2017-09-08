@@ -3,17 +3,18 @@
 namespace Bitaac\Admin;
 
 use Bitaac\Admin\Http\Middleware;
+use Bitaac\Admin\RouteServiceProvider;
 use Bitaac\Core\Providers\AggregateServiceProvider;
 
 class AdminServiceProvider extends AggregateServiceProvider
 {
     /**
-     * The provider routes file paths.
+     * The provider class names.
      *
      * @var array
      */
-    protected $routes = [
-        'Bitaac\Admin\Http\Controllers' => __DIR__.'/Http/routes.php',
+    protected $providers = [
+        RouteServiceProvider::class,
     ];
 
     /**

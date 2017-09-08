@@ -175,5 +175,5 @@ Validator::extend('guildless', function ($attribute, $value, $parameters, $valid
  * @return boolean
  */
 Validator::extend('rankname', function ($attribute, $value, $parameters, $validator) {
-    return preg_match('/^[a-zA-Z]+(\s[a-zA-Z]*){0,2}$/', $value);
+    return preg_match('/^[a-zA-Z-]+(\s[a-zA-Z-]*){0,2}$/', $value);
 });

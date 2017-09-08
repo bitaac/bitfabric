@@ -9,7 +9,17 @@ use Bitaac\Admin\Http\Requests\Products\CreateRequest;
 class CreateController extends Controller
 {
     /**
-     * Show add product form to user.
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+    
+    /**
+     * Show the add new store product page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -19,21 +29,20 @@ class CreateController extends Controller
     }
 
     /**
-     * Handle add product request.
+     * Handle the add new store product request.
      *
      * @param  \Bitaac\Admin\Http\Requests\Products\CreateRequest  $request
+     * @param  \Bitaac\Contracts\StoreProduct                      $product
      * @return \Illuminate\Http\Response
      */
     public function post(CreateRequest $request, StoreProduct $product)
     {
-        $product = new $product;
-        $product->title = $request->get('title');
-        $product->item_id = $request->get('item_id');
-        $product->item_count = $request->get('amount');
-        $product->points = $request->get('points');
-        $product->description = $request->get('description');
-        $product->save();
+        $product->create($request->only([
+            'title', 'item_id', 'count', 'points', 'description'
+        ]));
 
-        return redirect(route('admin.products'))->withSuccess('Your product has been added.');
+        return redirect()->route('admin.products')->with([
+            'success' => 'Your product has been added.',
+        ]);
     }
 }

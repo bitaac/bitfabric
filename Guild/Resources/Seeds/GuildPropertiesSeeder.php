@@ -17,6 +17,11 @@ class GuildPropertiesSeeder extends Seeder
         $guilds = app('guild')->all();
 
         foreach ($guilds as $guild) {
+            if (is_null($guild->slug)) {
+                $guild->slug = str_slug($guild->name);
+                $guild->save();
+            }
+
             if ($guild->bitaac) {
                 continue;
             }

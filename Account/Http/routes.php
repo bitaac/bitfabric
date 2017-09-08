@@ -2,40 +2,64 @@
 
 /*
 |--------------------------------------------------------------------------
-| /register & /login routes
+| other /account routes
 |--------------------------------------------------------------------------
-|
-| ...
-|
 */
 
-$router->name('login')->get('/login', 'Auth\LoginController@form');
-$router->post('/login', 'Auth\LoginController@post');
-$router->name('register')->get('/register', 'Auth\RegisterController@form');
-$router->post('/register', 'Auth\RegisterController@post');
+$router->name('account')->get('/', 'AccountController@index');
+$router->name('account.logout')->get('/logout', 'AccountController@logout');
 
 /*
 |--------------------------------------------------------------------------
-| /account routes
+| /account/password routes
 |--------------------------------------------------------------------------
-|
-| ...
-|
 */
 
-$router->group(['prefix' => '/account', 'middleware' => ['auth', 'email.update']], function ($router) {
-    $router->get('/', 'AccountController@index');
-    $router->get('/logout', 'AccountController@logout');
-    $router->get('/password', 'Change\PasswordController@form');
-    $router->post('/password', 'Change\PasswordController@post');
-    $router->get('/email', 'Change\EmailController@form');
-    $router->post('/email', 'Change\EmailController@post');
-    $router->get('/character', 'Character\CreateController@form');
-    $router->post('/character', 'Character\CreateController@post');
-    $router->get('/character/delete', 'Character\DeleteController@form');
-    $router->post('/character/delete', 'Character\DeleteController@post');
-    $router->get('/undelete/{player}', 'Character\UndeleteController@form')->middleware(['character.exists', 'owns.character']);
-    $router->post('/undelete/{player}', 'Character\UndeleteController@post')->middleware(['character.exists', 'owns.character']);
-    $router->get('/authentication', 'Authentication\AuthenticationController@form');
-    $router->post('/authentication', 'Authentication\AuthenticationController@post');
-});
+
+$router->name('account.password')->get('/password', 'Change\PasswordController@form');
+$router->post('/password', 'Change\PasswordController@post');
+
+/*
+|--------------------------------------------------------------------------
+| /account/email routes
+|--------------------------------------------------------------------------
+*/
+
+$router->name('account.email')->get('/email', 'Change\EmailController@form');
+$router->post('/email', 'Change\EmailController@post');
+
+/*
+|--------------------------------------------------------------------------
+| /account/character routes
+|--------------------------------------------------------------------------
+*/
+
+$router->name('account.character')->get('/character', 'Character\CreateController@form');
+$router->post('/character', 'Character\CreateController@post');
+
+/*
+|--------------------------------------------------------------------------
+| /account/character/delete routes
+|--------------------------------------------------------------------------
+*/
+
+$router->name('account.character.delete')->get('/character/delete', 'Character\DeleteController@form');
+$router->post('/character/delete', 'Character\DeleteController@post');
+
+/*
+|--------------------------------------------------------------------------
+| /account/undelete routes
+|--------------------------------------------------------------------------
+*/
+
+$router->name('account.character.undelete')->get('/undelete/{player}', 'Character\UndeleteController@form');
+$router->post('/undelete/{player}', 'Character\UndeleteController@post');
+
+/*
+|--------------------------------------------------------------------------
+| /account/authentication routes
+|--------------------------------------------------------------------------
+*/
+
+$router->name('account.authentication')->get('/authentication', 'Authentication\AuthenticationController@form');
+$router->post('/authentication', 'Authentication\AuthenticationController@post');

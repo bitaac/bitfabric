@@ -16,7 +16,7 @@ class PaymentController extends Controller
      */
     public function index($gateway)
     {
-        $gateway = config("bitaac.gateways.$gateway");
+        $gateway = config("bitaac.store.gateways.$gateway");
 
         if (! $gateway or ! $gateway['enabled']) {
             return redirect('/store/offers');
@@ -36,11 +36,11 @@ class PaymentController extends Controller
     public function post(Request $request, $provider)
     {
         // Verify that the amount exists as a offer.
-        if (! isset(config("bitaac.gateways.$provider.offers")[$request->get('amount')])) {
+        if (! isset(config("bitaac.store.gateways.$provider.offers")[$request->get('amount')])) {
             return back()->withErrors('Something went wrong, please try again.');
         }
 
-        $config = (object) config("bitaac.gateways.$provider");
+        $config = (object) config("bitaac.store.gateways.$provider");
 
         $gateway = Omnipay::create($config->omnipay);
 
@@ -73,7 +73,7 @@ class PaymentController extends Controller
      */
     public function return(Request $request, $provider)
     {
-        $config = (object) config("bitaac.gateways.$provider");
+        $config = (object) config("bitaac.store.gateways.$provider");
 
         $gateway = Omnipay::create($config->omnipay);
 
@@ -111,10 +111,10 @@ class PaymentController extends Controller
         $payment->currency = $transaction->getCurrency();
         $payment->amount = $transaction->getAmount();
         $payment->account_id = auth()->user()->id;
-        $payment->points = config("bitaac.gateways.$provider.offers")[$transaction->getAmount()];
+        $payment->points = config("bitaac.store.gateways.$provider.offers")[$transaction->getAmount()];
         $payment->save();
 
-        $user = auth()->user()->bit;
+        $user = auth()->user()->bitaac;
         $user->points = $user->points + $payment->points;
         $user->total_points = $user->total_points + $payment->points;
         $user->save();

@@ -4,6 +4,8 @@ namespace Bitaac\Core\Providers;
 
 use Bitaac\Contracts;
 use Illuminate\Http\Response;
+use Bitaac\Auth\AuthServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 use Bitaac\Admin\AdminServiceProvider;
 use Bitaac\Guild\GuildServiceProvider;
 use Bitaac\Store\StoreServiceProvider;
@@ -54,9 +56,6 @@ class BitfabricServiceProvider extends AggregateServiceProvider
         'guild.member' => [Contracts\GuildMember::class => \Bitaac\Guild\Models\GuildMember::class],
         'guild.rank'   => [Contracts\GuildRank::class   => \Bitaac\Guild\Models\GuildRank::class],
         'guild.invite' => [Contracts\GuildInvite::class => \Bitaac\Guild\Models\GuildInvite::class],
-
-        // Forum
-        'forum.post' => [Contracts\ForumPost::class => \Bitaac\Forum\Models\ForumPost::class],
     ];
 
     /**
@@ -66,11 +65,22 @@ class BitfabricServiceProvider extends AggregateServiceProvider
      */
     public function register()
     {
-        $this->app->register(\PragmaRX\Google2FA\Vendor\Laravel\ServiceProvider::class);
+        
+        $aliasloader = AliasLoader::getInstance();
+        $aliasloader->alias('Omnipay', \Barryvdh\Omnipay\Facade::class);
+
+        if (config('bitaac.account.two-factor', false)) {
+            $this->app->register(\PragmaRX\Google2FA\Vendor\Laravel\ServiceProvider::class);
+            $aliasloader->alias('Google2FA', \PragmaRX\Google2FA\Vendor\Laravel\Facade::class);
+        }
+
         //$this->app->register(\Barryvdh\Omnipay\ServiceProvider::class);
         $this->app->register(\Seedster\SeedsterServiceProvider::class);
-        $this->app->register(config('bitaac.app.theme', \Bitaac\Theme\RetroThemeServiceProvider::class));
-        $this->app->register(config('bitaac.app.theme-admin', \Bitaac\ThemeAdmin\ThemeAdminServiceProvider::class));
+        
+        $this->app->booted(function () {
+            $this->app->register(config('bitaac.app.theme', \Bitaac\ThemeDefault\ThemeDefaultServiceProvider::class));
+            $this->app->register(config('bitaac.app.theme-admin', \Bitaac\ThemeAdmin\ThemeAdminServiceProvider::class));
+        });
 
         $this->exceptions->handle(ModelNotFoundException::class, function ($e) {
             return new Response(view('bitaac::errors.404'), 404);

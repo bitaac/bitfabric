@@ -4,53 +4,35 @@
 |--------------------------------------------------------------------------
 | /forum routes
 |--------------------------------------------------------------------------
-|
-|
 */
 
-$router->group(['prefix' => '/forum'], function ($router) {
-    $router->get('/', 'ForumController@index');
-    $router->get('/{board}', 'Board\ShowController@index');
-    $router->get('/{board}/create', 'Thread\CreateController@form')->middleware('auth');
-    $router->post('/{board}/create', 'Thread\CreateController@post')->middleware('auth');
-    $router->get('/{board}/{thread}', 'Thread\ShowController@index');
-    $router->get('/{board}/{thread}/lock', 'Thread\LockController@form')->middleware(['auth', 'admin']);
-    $router->post('/{board}/{thread}/lock', 'Thread\LockController@post')->middleware(['auth', 'admin']);
-    $router->get('/{board}/{thread}/unlock', 'Thread\UnlockController@form')->middleware(['auth', 'admin']);
-    $router->post('/{board}/{thread}/unlock', 'Thread\UnlockController@post')->middleware(['auth', 'admin']);
-    $router->get('/{board}/{thread}/delete', 'Thread\DeleteController@form')->middleware(['auth', 'admin']);
-    $router->post('/{board}/{thread}/delete', 'Thread\DeleteController@post')->middleware(['auth', 'admin']);
-    $router->get('/{board}/{thread}/reply', 'Thread\ReplyController@index')->middleware(['auth', 'not.locked']);
-    $router->post('/{board}/{thread}/reply', 'Thread\ReplyController@post')->middleware(['auth', 'not.locked']);
-});
+$router->name('forum')->get('/', 'ForumController@index');
+$router->name('forum.board')->get('/{board}', 'Board\ShowController@index');
+
+$router->name('forum.thread.create')->get('/{board}/create', 'Thread\CreateController@form');
+$router->post('/{board}/create', 'Thread\CreateController@post');
+
+$router->name('forum.thread')->get('/{board}/{thread}', 'Thread\ShowController@index');
+
+$router->name('forum.thread.lock')->get('/{board}/{thread}/lock', 'Thread\LockController@form');
+$router->post('/{board}/{thread}/lock', 'Thread\LockController@post');
+
+$router->name('forum.thread.unlock')->get('/{board}/{thread}/unlock', 'Thread\UnlockController@form');
+$router->post('/{board}/{thread}/unlock', 'Thread\UnlockController@post');
+
+$router->name('forum.thread.delete')->get('/{board}/{thread}/delete', 'Thread\DeleteController@form');
+$router->post('/{board}/{thread}/delete', 'Thread\DeleteController@post');
+
+$router->name('forum.thread.reply')->get('/{board}/{thread}/reply', 'Thread\ReplyController@index');
+$router->post('/{board}/{thread}/reply', 'Thread\ReplyController@post');
+
+$router->name('forum.thread.hotlink')->get('/{board}/{thread}#{reply}', 'Thread\ShowController@index');
 
 /*
 |--------------------------------------------------------------------------
-| Explicit bindings
+| Model bindings
 |--------------------------------------------------------------------------
-|
-|
 */
 
-$router->bind('board', function ($board) {
-    $board = app('forum.board')->where('title', str_replace('-', ' ', $board));
-
-    if (! $board->exists()) {
-        throw new Bitaac\Forum\Exceptions\NotFoundBoardException;
-    }
-
-    return $board->first();
-});
-
-$router->bind('thread', function ($board) {
-    $board = app('forum.post')->where('title', str_replace('-', ' ', $board));
-
-    if (! $board->exists()) {
-        throw new Bitaac\Forum\Exceptions\NotFoundThreadException;
-    }
-
-    return $board->first();
-});
-
-
-
+$router->model('board', Bitaac\Contracts\Forum\Board::class);
+$router->model('thread', Bitaac\Contracts\Forum\Post::class);

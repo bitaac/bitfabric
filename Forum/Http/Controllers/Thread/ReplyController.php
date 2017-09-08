@@ -9,6 +9,16 @@ use App\Http\Controllers\Controller;
 class ReplyController extends Controller
 {
     /**
+     * Create a new reply controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'not.locked']);
+    }
+
+    /**
      * Show the thread reply form to the user.
      *
      * @param  string  $board

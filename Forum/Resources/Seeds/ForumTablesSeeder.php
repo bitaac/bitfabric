@@ -19,6 +19,7 @@ class ForumTablesSeeder extends Seeder
         if (! $table->where('news', 1)->exists()) {
             $table->insert([
                 'title'       => 'Latest News',
+                'slug'        => 'latest-news',
                 'description' => 'Here you\'ll find all of our latest announcements.',
                 'news'        => 1,
             ]);

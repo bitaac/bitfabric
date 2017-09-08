@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyLastipColumnToBiginteger extends Migration
+class AddSlugColumnToPlayers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ModifyLastipColumnToBiginteger extends Migration
      */
     public function up()
     {
-        Schema::table('__bitaac_forum_posts', function (Blueprint $table) {
-            $table->bigInteger('lastip')->change();
+        Schema::table('players', function (Blueprint $table) {
+            $table->string('slug')->nullable()->default(null);
         });
     }
 
@@ -25,8 +25,8 @@ class ModifyLastipColumnToBiginteger extends Migration
      */
     public function down()
     {
-        Schema::table('__bitaac_forum_posts', function (Blueprint $table) {
-            $table->integer('lastip')->change();
+        Schema::table('players', function (Blueprint $table) {
+            $table->dropColumn('slug');
         });
     }
 }

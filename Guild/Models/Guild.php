@@ -38,9 +38,7 @@ class Guild extends Model implements Contract
      */
     public function logoLink()
     {
-        return url_e('/guilds/:name/logo', [
-            'name' => $this->name,
-        ]);
+        return route('guild.logo', $this);
     }
 
     /**
@@ -50,9 +48,7 @@ class Guild extends Model implements Contract
      */
     public function link()
     {
-        return url_e('/guild/:name', [
-            'name' => $this->name,
-        ]);
+        return route('guild', $this);
     }
 
     /**
@@ -123,5 +119,15 @@ class Guild extends Model implements Contract
     public function getMembersExceptOwner()
     {
         return $this->getMembers()->where('player_id', '!=', $this->ownerid);
+    }
+
+    /**
+     * Changing an Eloquent model's "route key".
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

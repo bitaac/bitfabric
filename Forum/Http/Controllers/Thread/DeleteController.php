@@ -7,6 +7,16 @@ use App\Http\Controllers\Controller;
 class DeleteController extends Controller
 {
     /**
+     * Create a new delete controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+
+    /**
      * Show the thread delete form to the user.
      *
      * @param  string  $board

@@ -15,11 +15,13 @@ class AccountController extends Controller
      */
     public function __construct(Guard $auth)
     {
+        $this->middleware(['auth']);
+
         $this->auth = $auth;
     }
 
     /**
-     * Show the index page to the user.
+     * Show the account index page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,7 +31,7 @@ class AccountController extends Controller
     }
 
     /**
-     * Logout the user.
+     * Handle the logout request.
      *
      * @return \Illuminate\Http\Response
      */
@@ -37,6 +39,8 @@ class AccountController extends Controller
     {
         $this->auth->logout();
 
-        return redirect('/')->withSuccess('You have successfully logged out from your account.');
+        return redirect()->route('index')->with([
+            'success' => 'You have successfully logged out from your account.',
+        ]);
     }
 }

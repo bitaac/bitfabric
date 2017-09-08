@@ -5,17 +5,18 @@ namespace Bitaac\Forum;
 use Bitaac\Forum\Exceptions;
 use Illuminate\Http\Response;
 use Bitaac\Forum\Http\Middleware;
+use Bitaac\Forum\RouteServiceProvider;
 use Bitaac\Core\Providers\AggregateServiceProvider;
 
 class ForumServiceProvider extends AggregateServiceProvider
 {
     /**
-     * The provider routes file paths.
+     * The provider class names.
      *
      * @var array
      */
-    protected $routes = [
-        'Bitaac\Forum\Http\Controllers' => __DIR__.'/Http/routes.php',
+    protected $providers = [
+        RouteServiceProvider::class,
     ];
 
     /**
@@ -42,8 +43,8 @@ class ForumServiceProvider extends AggregateServiceProvider
      * @var array
      */
     protected $bindings = [
-        'forum.post'  => [\Bitaac\Contracts\ForumPost::class  => \Bitaac\Forum\Models\ForumPost::class],
-        'forum.board' => [\Bitaac\Contracts\ForumBoard::class => \Bitaac\Forum\Models\Board::class],
+        'forum.post'  => [\Bitaac\Contracts\Forum\Post::class  => \Bitaac\Forum\Models\Post::class],
+        'forum.board' => [\Bitaac\Contracts\Forum\Board::class => \Bitaac\Forum\Models\Board::class],
     ];
 
     /**

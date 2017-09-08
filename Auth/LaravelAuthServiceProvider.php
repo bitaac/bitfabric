@@ -1,11 +1,12 @@
 <?php
 
-namespace Bitaac\Core\Providers;
+namespace Bitaac\Auth;
 
+use Bitaac\Core\Providers\EloquentUserProvider;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
-class AuthServiceProvider extends ServiceProvider
+class LaravelAuthServiceProvider extends ServiceProvider
 {
     /**
      * The policy mappings for the application.

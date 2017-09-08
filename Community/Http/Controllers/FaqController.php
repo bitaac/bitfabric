@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 class FaqController extends Controller
 {
     /**
-     * Show the faq page to the user.
+     * Show the faq page.
      *
      * @return \Illuminate\Http\Response
      */

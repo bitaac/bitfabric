@@ -8,14 +8,16 @@ use Bitaac\Core\Database\Eloquent\Model;
 class Death extends Model implements Contract
 {
     /**
-     * Table used by the model.
+     * The table associated with the model.
+     *
+     * @var string
      */
     protected $table = 'player_deaths';
 
     /**
      * Get the related player.
      *
-     * @return HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function player()
     {

@@ -8,12 +8,14 @@ use Bitaac\Contracts\Online as Contract;
 class Online extends Model implements Contract
 {
     /**
-     * Table used by the model.
+     * The table associated with the model.
+     *
+     * @var string
      */
     protected $table = 'players_online';
 
     /**
-     * Tell the model to not use timestamps.
+     * Indicates if the model should be timestamped.
      *
      * @var bool
      */

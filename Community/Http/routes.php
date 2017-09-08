@@ -4,12 +4,9 @@
 |--------------------------------------------------------------------------
 | General Community Routes
 |--------------------------------------------------------------------------
-|
-| ...
-|
 */
 
-$router->get('/', 'WelcomeController@index');
-$router->get('/online', 'OnlineController@index');
-$router->get('/deaths', 'DeathsController@index');
-$router->get('/faq', 'FaqController@index');
+$router->name('index')->get('/', 'IndexController@index');
+$router->name('online')->get('/online', 'OnlineController@index');
+$router->name('deaths')->get('/deaths', 'DeathsController@index');
+$router->name('faq')->get('/faq', 'FaqController@index');

@@ -35,7 +35,7 @@ class ClaimController extends Controller
         $order->account_id = $request->user()->id;
         $order->player_id = $request->get('character');
         $order->item_id = $product->item_id;
-        $order->item_count = $product->item_count;
+        $order->count = $product->count;
         $order->save();
 
         $user->bitaac->points = $user->bitaac->points - $product->points;

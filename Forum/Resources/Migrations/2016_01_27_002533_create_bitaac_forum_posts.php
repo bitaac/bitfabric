@@ -19,9 +19,10 @@ class CreateBitaacForumPosts extends Migration
             $table->integer('player_id');
             $table->integer('belongs_to')->default(0);
             $table->string('title', 500);
+            $table->string('slug')->nullable()->default(null);
             $table->integer('views')->default(0);
             $table->longText('content');
-            $table->integer('lastip')->default(0);
+            $table->bigInteger('lastip')->default(0);
             $table->integer('timestamp');
             $table->integer('locked')->default(0);
             $table->integer('sticked')->default(0);

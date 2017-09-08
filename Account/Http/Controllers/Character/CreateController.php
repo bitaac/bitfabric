@@ -16,11 +16,13 @@ class CreateController extends Controller
      */
     public function __construct(Guard $auth)
     {
+        $this->middleware(['auth']);
+
         $this->auth = $auth;
     }
 
     /**
-     * Show the create character form to the user.
+     * Show the create character page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,8 +32,9 @@ class CreateController extends Controller
     }
 
     /**
-     * Process the character creation.
+     * Handle the create character request.
      *
+     * @param  \Bitaac\Account\Http\Requests\Character\CreateRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function post(CreateRequest $request)
@@ -42,6 +45,8 @@ class CreateController extends Controller
 
         app('player')->make($request->all());
 
-        return back()->withSuccess('Your character has been created.');
+        return redirect()->route('account')->with([
+            'success' => 'Your character has been created.',
+        ]);
     }
 }

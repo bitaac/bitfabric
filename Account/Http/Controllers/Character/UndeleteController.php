@@ -1,35 +1,53 @@
 <?php
 
-namespace Bitaac\Core\Http\Controllers\Account\Character;
+namespace Bitaac\Account\Http\Controllers\Character;
 
+use Bitaac\Contracts\Player;
 use App\Http\Controllers\Controller;
 
 class UndeleteController extends Controller
 {
     /**
-     * Show the undelete character form to the user.
+     * Create a new controller instance.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function form($player)
+    public function __construct()
     {
-        if (! $player->hasPendingDeletion()) {
-            return redirect('/account');
-        }
-
-        return view('bitaac::account.character.undelete')->with(compact('player'));
+        $this->middleware(['auth', 'character.exists', 'owns.character']);
     }
 
     /**
-     * Process the character undelete.
+     * Show the undelete character page.
      *
+     * @param  \Bitaac\Contracts\Player  $player
      * @return \Illuminate\Http\Response
      */
-    public function post($player)
+    public function form(Player $player)
     {
-        $player->bitaac->deletion_time = 0;
-        $player->bitaac->save();
+        if (! $player->hasPendingDeletion()) {
+            return redirect()->route('account');
+        }
 
-        return redirect('/account')->withSuccess("Character {$player->name} has been undeleted.");
+        return view('bitaac::account.character.undelete')->with([
+            'player' => $player,
+        ]);
+    }
+
+    /**
+     * Handle the undelete character request.
+     *
+     * @param  \Bitaac\Contracts\Player  $player
+     * @return \Illuminate\Http\Response
+     */
+    public function post(Player $player)
+    {
+        $player->bitaac->update([
+            'deletion_time' => 0,
+        ]);
+
+        return redirect()->route('account')->with([
+            'success' => "Character {$player->name} has been undeleted.",
+        ]);
     }
 }

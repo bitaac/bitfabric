@@ -10,18 +10,20 @@ use Bitaac\Account\Http\Requests\Character\DeleteRequest;
 class DeleteController extends Controller
 {
     /**
-     * Create a new delete controller instance.
+     * Create a new controller instance.
      *
      * @param  \Illuminate\Contracts\Auth\Guard  $auth
      * @return void
      */
     public function __construct(Guard $auth)
     {
+        $this->middleware(['auth']);
+        
         $this->auth = $auth;
     }
 
     /**
-     * Show the delete character form to the user.
+     * Show the delete character page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,17 +33,19 @@ class DeleteController extends Controller
     }
 
     /**
-     * Process the character delete.
+     * Handle the delete character request.
      *
-     * @param \Bitaac\Account\Http\Requests\Character\DeleteRequest $request
+     * @param  \Bitaac\Account\Http\Requests\Character\DeleteRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function post(DeleteRequest $request)
     {
         $user = $this->auth->user();
 
-        if (! $this->auth->attempt(['name' => $user->name, 'password' => $request->get('password')])) {
-            return back()->withError('Password do not match.');
+        if (! $this->auth->validate(['name' => $user->name, 'password' => $request->get('password')])) {
+            return back()->withErrors([
+                'error' => 'Password do not match.',
+            ])->withInput();
         }
 
         $player = app('player')->where(function ($query) use ($user, $request) {
@@ -52,15 +56,15 @@ class DeleteController extends Controller
         if (config('bitaac.account.delete-character-time') == 0) {
             $player->delete();
 
-            return redirect('/account')->withSuccess('Your character has been deleted.');
+            return redirect()->route('account')->withSuccess('Your character has been deleted.');
         }
 
         $player = $player->first();
         $player->bitaac->deletion_time = time() + config('bitaac.account.delete-character-time');
         $player->bitaac->save();
 
-        return redirect('/account')->withSuccess(
-            'Your character '.$player->name.' will be deleted at '.Carbon::createFromTimestamp($player->bitaac->deletion_time).'.'
-        );
+        return redirect()->route('account')->with([
+            'success' => 'Your character '.$player->name.' will be deleted at '.Carbon::createFromTimestamp($player->bitaac->deletion_time),
+        ]);
     }
 }

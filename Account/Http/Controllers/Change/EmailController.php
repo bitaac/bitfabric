@@ -10,18 +10,20 @@ use Bitaac\Account\Http\Requests\Change\EmailRequest;
 class EmailController extends Controller
 {
     /**
-     * Create a new email controller instance.
+     * Create a new controller instance.
      *
      * @param  \Illuminate\Contracts\Auth\Guard  $auth
      * @return void
      */
     public function __construct(Guard $auth)
     {
+        $this->middleware(['auth']);
+
         $this->auth = $auth;
     }
 
     /**
-     * Show the change email form to the user.
+     * Show the change email page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,8 +33,9 @@ class EmailController extends Controller
     }
 
     /**
-     * Process the email change.
+     * Handle the change email request.
      *
+     * @param  \Bitaac\Account\Http\Requests\Change\EmailRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function post(EmailRequest $request)
@@ -41,7 +44,9 @@ class EmailController extends Controller
         $time = config('bitaac.account.change-email-time');
 
         if (! $this->auth->validate(['name' => $user->name, 'password' => $request->get('password')])) {
-            return back()->withError('Password did not match.');
+            return back()->withErrors([
+                'error' => 'Password did not match.',
+            ])->withInput();
         }
 
         if ($time == 0) {
@@ -57,6 +62,8 @@ class EmailController extends Controller
         $user->bitaac->email_change_new = $request->get('email');
         $user->bitaac->save();
 
-        return back()->withSuccess('You have requested to change your email address to '.$request->get('email').'. The actual change will take place after '.$updates.', during which you can cancel the request at any time.');
+        return back()->with([
+            'success' => 'You have requested to change your email address to '.$request->get('email').'. The actual change will take place after '.$updates.', during which you can cancel the request at any time.',
+        ]);
     }
 }

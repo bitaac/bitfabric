@@ -16,9 +16,9 @@ class CreateBitaacStoreProductsTable extends Migration
         Schema::create('__bitaac_store_products', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('item_id');
-            $table->integer('item_count');
+            $table->integer('count');
             $table->string('title', 255);
-            $table->string('description', 255);
+            $table->string('description', 255)->nullable()->default(null);
             $table->integer('points');
             $table->timestamps();
         });

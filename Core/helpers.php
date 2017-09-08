@@ -267,3 +267,57 @@ if (! function_exists('config_lua')) {
         return isset($config[$key]) ? $config[$key] : $default;
     }
 }
+
+if (! function_exists('getOnlineRecord')) {
+    /**
+     * Get the server online record.
+     *
+     * @return integer
+     */
+    function getOnlineRecord()
+    {
+        return DB::table('server_config')->where('config', 'players_record')->first()->value;
+    }
+}
+
+if (! function_exists('isServerOnline')) {
+    /**
+     * Determine if the OTServer is online.
+     *
+     * @return boolean
+     */
+    function isServerOnline()
+    {
+        @$sock = fsockopen(config('bitaac.server.ip'), config('bitaac.server.port'), $errno, $errstr, 1);
+
+        return Cache::remember('bitaac:server:status', 10, function () use ($sock) {
+            return (boolean) $sock;
+        });
+    }
+}
+
+if (! function_exists('getOnlinePlayers')) {
+    /**
+     * Get online players.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    function getOnlinePlayers()
+    {
+        return Cache::remember('bitaac:players:online', 10, function () {
+            return app('player')->getOnlineList();
+        });
+    }
+}
+
+if (! function_exists('getOnlinePlayersCount')) {
+    /**
+     * Get online players count.
+     *
+     * @return boolean
+     */
+    function getOnlinePlayersCount()
+    {
+        return getOnlinePlayers()->count();
+    }
+}

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyContentColumnToLongtext extends Migration
+class AddSlugColumnToGuilds extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ModifyContentColumnToLongtext extends Migration
      */
     public function up()
     {
-        Schema::table('__bitaac_forum_posts', function (Blueprint $table) {
-            $table->longText('content')->change();
+        Schema::table('guilds', function (Blueprint $table) {
+            $table->string('slug')->nullable()->default(null);
         });
     }
 
@@ -25,8 +25,8 @@ class ModifyContentColumnToLongtext extends Migration
      */
     public function down()
     {
-        Schema::table('__bitaac_forum_posts', function (Blueprint $table) {
-            $table->string('content')->change();
+        Schema::table('guilds', function (Blueprint $table) {
+            $table->dropColumn('slug');
         });
     }
 }

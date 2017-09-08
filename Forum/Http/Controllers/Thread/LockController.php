@@ -8,6 +8,16 @@ use App\Http\Controllers\Controller;
 class LockController extends Controller
 {
     /**
+     * Create a new lock controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+
+    /**
      * Show the thread lock form to the user.
      *
      * @param  \Bitaac\Forum\Board   $board
