@@ -2,6 +2,7 @@
 
 namespace Bitaac\Account\Http\Controllers\Authentication;
 
+use Google2FA;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
@@ -10,18 +11,20 @@ use PragmaRX\Google2FA\Exceptions\InvalidCharactersException;
 class AuthenticationController extends Controller
 {
     /**
-     * Create a new authentication controller instance.
+     * Create a new controller instance.
      *
      * @param  \Illuminate\Contracts\Auth\Guard  $auth
      * @return void
      */
     public function __construct(Guard $auth)
     {
+        $this->middleware(['auth']);
+
         $this->auth = $auth;
 
         $this->middleware(function ($request, $next) {
-            if (! config('account.two-factor')) {
-                return redirect('/account');
+            if (! config('bitaac.account.two-factor')) {
+                return redirect()->route('account');
             }
 
             return $next($request);
@@ -35,7 +38,19 @@ class AuthenticationController extends Controller
      */
     public function form()
     {
-        return view('bitaac::account.authentication.index');
+        $account = $this->auth->user();
+
+        $secret = $account->secret ? $account->secret : Google2FA::generateSecretKey();
+        
+        $google2fa_url = Google2FA::getQRCodeGoogleUrl(
+            'bitaac',
+            $account->name,
+            $account->bitaac->secret
+        );
+
+        return view('bitaac::account.authentication.index')->with([
+            'google2fa_url' => $google2fa_url,
+        ]);
     }
 
     /**

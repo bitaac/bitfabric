@@ -9,9 +9,18 @@ use Illuminate\Database\Eloquent\Model;
 class BitaacAccount extends Model
 {
     /**
-     * Table used by the model.
+     * The table associated with the model.
+     *
+     * @var string
      */
     protected $table = '__bitaac_accounts';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['account_id', 'admin', 'email_change_time', 'email_change_new', 'reckey', 'last_login', 'total_points', 'points', 'secret'];
 
     /**
      * Renew the last_login value.
@@ -33,5 +42,16 @@ class BitaacAccount extends Model
     {
         $this->secret = Google2FA::generateSecretKey();
         $this->save();
+    }
+
+    /**
+     * Set the account's admin status.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setAdminAttribute($value)
+    {
+        $this->attributes['admin'] = (boolean) $value;
     }
 }

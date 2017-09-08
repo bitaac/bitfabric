@@ -1,10 +1,12 @@
 <?php
 
-namespace Bitaac\Account\Http\Controllers\Auth;
+namespace Bitaac\Auth\Http\Controllers;
 
+use Google2FA;
 use Illuminate\Contracts\Auth\Guard;
 use App\Http\Controllers\Controller;
-use Bitaac\Account\Http\Requests\Auth\LoginRequest;
+use Bitaac\Auth\Http\Requests\LoginRequest;
+use PragmaRX\Google2FA\Exceptions\SecretKeyTooShortException;
 
 class LoginController extends Controller
 {
@@ -16,11 +18,13 @@ class LoginController extends Controller
      */
     public function __construct(Guard $auth)
     {
+        $this->middleware(['guest']);
+
         $this->auth = $auth;
     }
 
     /**
-     * Show the login form to the user.
+     * Show the login page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,8 +34,9 @@ class LoginController extends Controller
     }
 
     /**
-     * Process the login.
+     * Handle the login request.
      *
+     * @param  \Bitaac\Account\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function post(LoginRequest $request)
@@ -42,18 +47,19 @@ class LoginController extends Controller
         });
 
         if (! $user->exists()) {
-            return back()->withError('These credentials do not match our records.');
+            return back()->withErrors([
+                'error' => 'These credentials do not match our records.',
+            ]);
         }
 
         $user = $user->first();
 
-        if ($user->secret && config('account.two-factor')) {
-            if ($request->get('2fa') == '') {
+        if ($user->secret && config('bitaac.account.two-factor')) {
+            if (! $request->filled('2fa')) {
                 return back()->withError(trans('auth.login.2fa.required'));
             }
 
-            $valid = \Google2FA::verifyKey($user->secret, $request->get('2fa'));
-            if (! $valid) {
+            if (! $this->verify2FA($user->secret, $request->get('2fa'))) {
                 return back()->withError(trans('auth.login.2fa.not.valid'));
             }
         }
@@ -61,6 +67,26 @@ class LoginController extends Controller
         $user->bitaac->updateLastLogin();
         $this->auth->loginUsingId($user->id);
 
-        return redirect('/account')->withSuccess('You have been logged in.');
+        return redirect()->route('account')->with([
+            'success' => 'You have been logged in.',
+        ]);
+    }
+
+    /**
+     * Verify the two-factor authentication key.
+     *
+     * @param  string  $secret
+     * @param  string  $key
+     * @return void
+     */
+    public function verify2FA($secret, $key)
+    {
+        try {
+            $valid = Google2FA::verifyKey($secret, $key);
+        } catch (SecretKeyTooShortException $e) {
+            $valid = false;
+        }
+
+        return $valid;
     }
 }

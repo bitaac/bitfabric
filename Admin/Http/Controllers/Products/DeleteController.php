@@ -8,26 +8,40 @@ use App\Http\Controllers\Controller;
 class DeleteController extends Controller
 {
     /**
-     * Show delete store product form to user.
+     * Create a new controller instance.
      *
-     * @param  \Bitaac\Store\Models\StoreProduct  $product
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+    
+    /**
+     * Show the delete store product page.
+     *
+     * @param  \Bitaac\Contracts\StoreProduct  $product
      * @return \Illuminate\Http\Response
      */
     public function form(StoreProduct $product)
     {
-        return view('admin::products.delete')->with(compact('product'));
+        return view('admin::products.delete')->with([
+            'product' => $product,
+        ]);
     }
 
     /**
-     * Handle delete store product request.
+     * Handle the delete store product request.
      *
-     * @param  \Bitaac\Store\Models\StoreProduct  $product
+     * @param  \Bitaac\Contracts\StoreProduct  $product
      * @return \Illuminate\Http\Response
      */
     public function post(StoreProduct $product)
     {
         $product->delete();
 
-        return redirect(route('admin.products'))->withSuccess('Your product has been deleted.');
+        return redirect()->route('admin.products')->with([
+            'success' => 'Your product has been deleted.',
+        ]);
     }
 }

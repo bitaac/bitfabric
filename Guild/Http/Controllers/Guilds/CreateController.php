@@ -28,6 +28,7 @@ class CreateController extends Controller
         $guild->name = $request->get('name');
         $guild->ownerid = $request->get('leader');
         $guild->creationdata = time();
+        $guild->slug = str_slug($request->get('name'));
         $guild->save();
 
         $rank = app('guild.rank')->where(function ($query) use ($guild) {

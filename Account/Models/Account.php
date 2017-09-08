@@ -12,12 +12,21 @@ class Account extends Model implements Contract
     use Authenticatable;
 
     /**
-     * Table used by the model.
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'secret', 'type', 'premdays', 'lastday', 'email', 'password'];
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
      */
     protected $table = 'accounts';
 
     /**
-     * Tell the model to not use timestamps.
+     * Indicates if the model should be timestamped.
      *
      * @var bool
      */
@@ -99,13 +108,13 @@ class Account extends Model implements Contract
     }
 
     /**
-     * Determine if account is a admin account_id.
+     * Determine if account has admin rights.
      *
      * @return bool
      */
     public function isAdmin()
     {
-        return (bool) $this->bitaac->admin;
+        return session()->has('bitaac:impersonator') ? false : (bool) $this->bitaac->admin;
     }
 
     /**
@@ -251,5 +260,15 @@ class Account extends Model implements Contract
      */
     public function getRememberTokenName()
     {
+    }
+
+    /**
+     * Always encrypt the password attribute.
+     *
+     * @param  string  $password
+     * @return void
+     */
+    public function setPasswordAttribute($password){
+        $this->attributes['password'] = bcrypt($password);
     }
 }

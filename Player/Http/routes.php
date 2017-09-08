@@ -9,25 +9,18 @@
 */
 
 $router->group(['prefix' => '/character'], function ($router) {
-    $router->get('/', 'SearchController@form');
+    $router->name('character.search')->get('/', 'SearchController@form');
     $router->post('/', 'SearchController@post');
-    $router->get('/{player}', 'CharacterController@index');
+    $router->name('character')->get('/{player}', 'CharacterController@index');
 });
 
 /*
 |--------------------------------------------------------------------------
-| Explicit bindings
+| Model bindings
 |--------------------------------------------------------------------------
 |
 |
 */
 
-$router->bind('player', function ($name) {
-    $player = app('player')->where('name', str_replace('-', ' ', $name));
+$router->model('player', \Bitaac\Contracts\Player::class);
 
-    if (! $player->exists()) {
-        throw new Bitaac\Player\Exceptions\NotFoundPlayerException;
-    }
-
-    return $player->first();
-});

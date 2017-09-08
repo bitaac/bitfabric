@@ -2,6 +2,7 @@
 
 namespace Bitaac\Player\Models;
 
+use Bitaac\Core\Bitaac;
 use Bitaac\Player\Traits\Storage;
 use Bitaac\Player\Models\Formulae;
 use Bitaac\Core\Database\Eloquent\Model;
@@ -70,7 +71,7 @@ class Player extends Model implements Contract
      */
     public function posts()
     {
-        return $this->hasMany('Bitaac\Forum\Models\ForumPost', 'player_id')->count();
+        return $this->hasMany('Bitaac\Forum\Models\Post', 'player_id');
     }
 
     /**
@@ -92,7 +93,7 @@ class Player extends Model implements Contract
      */
     public function getRouteKeyName()
     {
-        return 'name';
+        return 'slug';
     }
 
     /**
@@ -186,16 +187,6 @@ class Player extends Model implements Contract
     }
 
     /**
-     * Get the online record.
-     *
-     * @return int
-     */
-    public function getOnlineRecord()
-    {
-        return \DB::table('server_config')->where('config', 'players_record')->first()->value;
-    }
-
-    /**
      * Get player guild invitees.
      *
      * @return HasMany
@@ -223,5 +214,55 @@ class Player extends Model implements Contract
     public function storage()
     {
         return $this->hasMany('Bitaac\Contracts\PlayerStorage', 'player_id');
+    }
+
+    /**
+     * Determine if the player has VIP status.
+     *
+     * @return Closure
+     */
+    public function isVip()
+    {
+        return call_user_func_array(Bitaac::extended('player:isVip'), [$this, $this->account]);
+    }
+
+    /**
+     * Get player gender object.
+     *
+     * @return object
+     */
+    public function getGenderAttribute()
+    {
+        return (object) [
+            'id' => $this->sex,
+            'name' => gender($this->sex),
+        ];
+    }
+
+    /**
+     * Get player vocation object.
+     *
+     * @param  integer  $vocation
+     * @return object
+     */
+    public function getVocationAttribute($vocation)
+    {
+        return (object) [
+            'id' => $vocation,
+            'name' => vocation($vocation),
+        ];
+    }
+
+    /**
+     * Get player town object.
+     *
+     * @return object
+     */
+    public function getTownAttribute()
+    {
+        return (object) [
+            'id' => $this->town_id,
+            'name' => town($this->town_id),
+        ];
     }
 }

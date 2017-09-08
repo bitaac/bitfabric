@@ -56,7 +56,7 @@ class StoreServiceProvider extends AggregateServiceProvider
 
         $this->publishes([
             __DIR__.'/Resources/Config' => config_path('bitaac'),
-        ], 'config');
+        ], 'bitaac:config');
 
         $this->exceptions->handle(NotFoundProductException::class, function ($e) {
             return new Response(view('bitaac::errors.404'), 404);

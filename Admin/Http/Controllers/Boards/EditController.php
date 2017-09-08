@@ -2,35 +2,50 @@
 
 namespace Bitaac\Admin\Http\Controllers\Boards;
 
-use Bitaac\Contracts\ForumBoard;
+use Bitaac\Contracts\Forum\Board;
 use App\Http\Controllers\Controller;
 use Bitaac\Admin\Http\Requests\Boards\EditRequest;
 
 class EditController extends Controller
 {
     /**
-     * Show edit forum board form to user.
+     * Create a new controller instance.
      *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+    
+    /**
+     * Show the edit forum board page.
+     *
+     * @param  \Bitaac\Contracts\Forum\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function form(ForumBoard $board)
+    public function form(Board $board)
     {
-        return view('admin::boards.edit')->with(compact('board'));
+        return view('admin::boards.edit')->with([
+            'board' => $board,
+        ]);
     }
 
     /**
-     * Handle create forum board request.
+     * Handle the edit forum board request.
      *
      * @param  \Bitaac\Admin\Http\Requests\Boards\EditRequest  $request
+     * @param  \Bitaac\Contracts\Forum\Board                    $board
      * @return \Illuminate\Http\Response
      */
-    public function post(EditRequest $request, ForumBoard $board)
+    public function post(EditRequest $request, Board $board)
     {
-        $board->title = $request->get('title');
-        $board->order = ($request->has('order')) ? $request->get('order') : 0;
-        $board->description = $request->get('description');
-        $board->save();
+        $board->update($request->only([
+            'title', 'order', 'description'
+        ]));
 
-        return redirect('/admin/boards')->withSuccess('Your changes were saved.');
+        return redirect()->route('admin.boards')->with([
+            'success' => 'Your changes were saved.',
+        ]);
     }
 }

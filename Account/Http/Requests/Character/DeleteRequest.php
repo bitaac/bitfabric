@@ -10,7 +10,7 @@ class DeleteRequest extends FormRequest
     public function rules()
     {
         return [
-            'character' => ['required', 'exists:players,name', new OwnsCharacter],
+            'character' => ['bail', 'required', 'exists:players,name', new OwnsCharacter],
             'password'  => ['required'],
         ];
     }

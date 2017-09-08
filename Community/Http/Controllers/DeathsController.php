@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 class DeathsController extends Controller
 {
     /**
-     * Show the deaths page to the user.
+     * Show the latest deaths page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -23,6 +23,8 @@ class DeathsController extends Controller
             $deaths = $deaths->limit($limit)->get();
         }
 
-        return view('bitaac::community.deaths')->with(compact('deaths'));
+        return view('bitaac::community.deaths')->with([
+            'deaths' => $deaths,
+        ]);
     }
 }

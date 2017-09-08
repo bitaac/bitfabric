@@ -16,7 +16,8 @@ class CreateForumBoardsTable extends Migration
         Schema::create('__bitaac_forum_boards', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title', 50);
-            $table->string('description', 150);
+            $table->string('slug')->nullable()->default(null);
+            $table->string('description', 150)->nullable()->default(null);
             $table->integer('news')->default(0);
             $table->integer('order')->default(0);
             $table->timestamps();

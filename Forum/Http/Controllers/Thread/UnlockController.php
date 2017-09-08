@@ -8,6 +8,16 @@ use App\Http\Controllers\Controller;
 class UnlockController extends Controller
 {
     /**
+     * Create a new unlock controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+
+    /**
      * Show the thread unlock form to the user.
      *
      * @param  \Bitaac\Forum\Board   $board

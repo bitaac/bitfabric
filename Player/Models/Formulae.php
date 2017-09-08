@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Bitaac\Player\Models;
 
@@ -14,8 +14,8 @@ class Formulae
     {
         list($gain, $gains) = [5, config('bitaac.server.gains.health')];
 
-        if (isset($gains[$player->vocation])) {
-            $gain = $gains[$player->vocation];
+        if (isset($gains[$player->vocation->id])) {
+            $gain = $gains[$player->vocation->id];
         }
 
         return formulae('health', $player, $gain);
@@ -31,8 +31,8 @@ class Formulae
     {
         list($gain, $gains) = [5, config('bitaac.server.gains.mana')];
 
-        if (isset($gains[$player->vocation])) {
-            $gain = $gains[$player->vocation];
+        if (isset($gains[$player->vocation->id])) {
+            $gain = $gains[$player->vocation->id];
         }
 
         return formulae('mana', $player, $gain);
@@ -48,8 +48,8 @@ class Formulae
     {
         list($gain, $gains) = [10, config('bitaac.server.gains.capacity')];
 
-        if (isset($gains[$player->vocation])) {
-            $gain = $gains[$player->vocation];
+        if (isset($gains[$player->vocation->id])) {
+            $gain = $gains[$player->vocation->id];
         }
 
         return formulae('capacity', $player, $gain);

@@ -29,11 +29,11 @@ return [
     | Theme service provider
     |--------------------------------------------------------------------------
     | Currently available:
-    |     Bitaac\Theme\RetroThemeServiceProvider::class
+    |     Bitaac\ThemeDefault\ThemeDefaultServiceProvider::class
     |
     */
 
-    'theme' => Bitaac\Theme\RetroThemeServiceProvider::class,
+    'theme' => Bitaac\ThemeDefault\ThemeDefaultServiceProvider::class,
 
     /*
     |--------------------------------------------------------------------------

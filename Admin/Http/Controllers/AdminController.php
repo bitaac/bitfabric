@@ -9,21 +9,33 @@ use App\Http\Controllers\Controller;
 class AdminController extends Controller
 {
     /**
-     * Show application adminpanel index to user.
+     * Create a new controller instance.
      *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+    
+    /**
+     * Show the adminpanel index page.
+     *
+     * @param  \Bitaac\Contracts\Account  $account
+     * @param  \Bitaac\Contracts\Player   $player
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Account $account, Player $player)
     {
-        $player = $player->get();
+        $players = $player->all();
 
-        $highestLevel = ($player->count() > 0) ? $player->sortByDesc('level')->first()->level : 0 ;
+        $highestLevel = ($players->count() > 0) ? $players->sortByDesc('level')->first()->level : 0 ;
 
-        $averageLevel = ($player->count() > 0) ? number_format($player->pluck('level')->avg()) : 0 ; 
+        $averageLevel = ($players->count() > 0) ? number_format($players->pluck('level')->avg()) : 0 ;
 
         return view('admin::index')->with([
             'totalAccounts' => $account->count(),
-            'totalPlayers'  => $player->count(),
+            'totalPlayers'  => $players->count(),
             'highestLevel'  => $highestLevel,
             'averageLevel'  => $averageLevel,
         ]);

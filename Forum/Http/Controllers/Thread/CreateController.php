@@ -2,20 +2,29 @@
 
 namespace Bitaac\Forum\Http\Controllers\Thread;
 
-use Bitaac\Forum\Models\Board;
-use Bitaac\Forum\Models\ForumPost;
+use Bitaac\Contracts\Forum\Board;
 use App\Http\Controllers\Controller;
 use Bitaac\Forum\Http\Requests\Thread\CreateRequest;
 
 class CreateController extends Controller
 {
     /**
-     * Show the create a new thread form to the user.
+     * Create a new create controller instance.
      *
-     * @param  string  $board
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
+    /**
+     * Show the create thread page.
+     *
+     * @param  \Bitaac\Contracts\Forum\Board $board
      * @return \Illuminate\Http\Response
      */
-    public function form($board)
+    public function form(Board $board)
     {
         return view('bitaac::forum.thread.create', [
             'board' => $board,
@@ -23,39 +32,23 @@ class CreateController extends Controller
     }
 
     /**
-     * Process the thread creation.
+     * Handle the create thread request.
      *
-     * @param  string  $board
+     * @param  \Bitaac\Forum\Http\Requests\Thread\CreateRequest  $request
+     * @param  \Bitaac\Contracts\Forum\Board                      $board
      * @return \Illuminate\Http\Response
      */
-    public function post(CreateRequest $request, $board)
+    public function post(CreateRequest $request, Board $board)
     {
-        $exists = ForumPost::where('title', $title = trim($request->get('title')));
-
-        if ($exists->exists()) {
-            $number = 0;
-            $proceed = false;
-            while ($proceed == false) {
-                $number = $number + 1;
-                $title = $exists->first()->title.' '.$number;
-
-                if (! ForumPost::where('title', $title)->exists()) {
-                    $proceed = true;
-                }
-            }
-        }
-
-        $post = new ForumPost;
+        $post = app('forum.post');
         $post->board_id = $board->id;
         $post->player_id = $request->get('author');
-        $post->title = $title;
+        $post->title = $request->title;
+        $post->slug = str_slug($request->title);
         $post->content = $request->get('content');
         $post->timestamp = time();
         $post->save();
 
-        return redirect(url_e('/forum/:board/:title', [
-            'board' => $board->title,
-            'title' => $post->title,
-        ]));
+        return redirect()->route('forum.thread', [$board, $post]);
     }
 }

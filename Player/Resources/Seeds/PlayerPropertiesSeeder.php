@@ -17,6 +17,11 @@ class PlayerPropertiesSeeder extends Seeder
         $players = app('player')->all();
 
         foreach ($players as $player) {
+            if (is_null($player->slug)) {
+                $player->slug = str_slug($player->name);
+                $player->save();
+            }
+
             if ($player->bitaac) {
                 continue;
             }

@@ -31,7 +31,7 @@ return [
     |
     */
 
-    'change-email-time' => 1 * 60 * 60,
+    'change-email-time' => 0,
 
     /*
     |--------------------------------------------------------------------------
@@ -42,6 +42,6 @@ return [
     |
     */
 
-    'delete-character-time' => 15,
+    'delete-character-time' => 1 * 60 * 60,
 
 ];

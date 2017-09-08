@@ -6,6 +6,21 @@ use Bitaac\Core\Foundation\Http\FormRequest;
 
 class CreateRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
     public function rules()
     {
         return [
@@ -14,10 +29,5 @@ class CreateRequest extends FormRequest
             'vocation' => ['required', 'in_config:bitaac.character.create-vocations'],
             'town'     => ['required', 'in_config:bitaac.character.create-towns'],
         ];
-    }
-
-    public function authorize()
-    {
-        return true;
     }
 }
