@@ -65,7 +65,6 @@ class BitfabricServiceProvider extends AggregateServiceProvider
      */
     public function register()
     {
-        
         $aliasloader = AliasLoader::getInstance();
         $aliasloader->alias('Omnipay', \Barryvdh\Omnipay\Facade::class);
 
@@ -76,10 +75,14 @@ class BitfabricServiceProvider extends AggregateServiceProvider
 
         //$this->app->register(\Barryvdh\Omnipay\ServiceProvider::class);
         $this->app->register(\Seedster\SeedsterServiceProvider::class);
-        
+
         $this->app->booted(function () {
             $this->app->register(config('bitaac.app.theme', \Bitaac\ThemeDefault\ThemeDefaultServiceProvider::class));
             $this->app->register(config('bitaac.app.theme-admin', \Bitaac\ThemeAdmin\ThemeAdminServiceProvider::class));
+
+            if (file_exists($path = base_path('routes/extensions.php'))) {
+                require_once $path;
+            }
         });
 
         $this->exceptions->handle(ModelNotFoundException::class, function ($e) {
