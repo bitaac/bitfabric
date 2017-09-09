@@ -3,28 +3,17 @@
 namespace Bitaac\Community\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Bitaac\Community\Http\Responses\DeathsResponse;
 
 class DeathsController extends Controller
 {
     /**
      * Show the latest deaths page.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Bitaac\Community\Http\Responses\DeathsResponse
      */
     public function index()
     {
-        $deaths = app('death')->orderBy('time', 'desc');
-
-        $limit = config('bitaac.community.deaths-per-page', 10);
-
-        if (config('bitaac.community.deaths-pagination', true)) {
-            $deaths = $deaths->paginate($limit);
-        } else {
-            $deaths = $deaths->limit($limit)->get();
-        }
-
-        return view('bitaac::community.deaths')->with([
-            'deaths' => $deaths,
-        ]);
+        return new DeathsResponse();
     }
 }
