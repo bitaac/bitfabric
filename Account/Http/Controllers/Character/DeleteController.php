@@ -17,8 +17,8 @@ class DeleteController extends Controller
      */
     public function __construct(Guard $auth)
     {
-        $this->middleware(['auth']);
-        
+        $this->middleware(['auth', 'delete.character.enabled']);
+
         $this->auth = $auth;
     }
 

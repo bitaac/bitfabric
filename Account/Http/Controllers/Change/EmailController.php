@@ -17,7 +17,7 @@ class EmailController extends Controller
      */
     public function __construct(Guard $auth)
     {
-        $this->middleware(['auth']);
+        $this->middleware(['auth', 'change.email.enabled']);
 
         $this->auth = $auth;
     }

@@ -33,6 +33,8 @@ class AccountServiceProvider extends AggregateServiceProvider
      */
     protected $routeMiddleware = [
         'email.update' => Middleware\EmailUpdateMiddleware::class,
+        'change.email.enabled' => Middleware\ChangeEmailEnabledMiddleware::class,
+        'delete.character.enabled' => Middleware\DeleteCharacterEnabledMiddleware::class,
     ];
 
     /**

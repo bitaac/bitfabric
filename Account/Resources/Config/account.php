@@ -6,8 +6,6 @@ return [
     |--------------------------------------------------------------------------
     | Enable or disable two factor auth
     |--------------------------------------------------------------------------
-    |
-    |
     */
 
     'two-factor' => false,
@@ -16,8 +14,6 @@ return [
     |--------------------------------------------------------------------------
     | Max characters per account
     |--------------------------------------------------------------------------
-    |
-    |
     */
 
     'max-characters' => 10,
@@ -26,22 +22,24 @@ return [
     |--------------------------------------------------------------------------
     | Account change email
     |--------------------------------------------------------------------------
-    |
-    | Time in seconds when the actual email change will take place.
-    |
     */
 
+    // Disabled / Enable ability to change email.
+    'change-email-enabled' => true,
+
+    // Time in seconds when the actual email change will take place.
     'change-email-time' => 0,
 
     /*
     |--------------------------------------------------------------------------
-    | Character deletion time
+    | Account Character deletion
     |--------------------------------------------------------------------------
-    |
-    | Time in seconds when the actual character deletion will take place.
-    |
     */
 
+    // Disabled / Enable ability to delete character.
+    'delete-character-enabled' => true,
+
+    // Time in seconds when the actual character deletion will take place.
     'delete-character-time' => 1 * 60 * 60,
 
 ];
