@@ -150,6 +150,8 @@ class Player extends Model implements Contract
             $character->cap = $capacity;
         }
 
+        $character->slug = str_slug($character->name);
+
         $character->save();
 
         return $character;
