@@ -2,7 +2,6 @@
 
 namespace Bitaac\Community\Http\Responses;
 
-use Bitaac\Forum\Models\Board;
 use Illuminate\Contracts\Support\Responsable;
 
 class DeathsResponse implements Responsable
