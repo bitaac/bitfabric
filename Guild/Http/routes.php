@@ -2,11 +2,8 @@
 
 /*
 |--------------------------------------------------------------------------
-| Invidual guild routes
+| /guild routes
 |--------------------------------------------------------------------------
-|
-| ...
-|
 */
 
 $router->group(['prefix' => '/guild'], function ($router) {
@@ -32,11 +29,8 @@ $router->group(['prefix' => '/guild'], function ($router) {
 
 /*
 |--------------------------------------------------------------------------
-| Generic guilds routes
+| /guilds routes
 |--------------------------------------------------------------------------
-|
-| ...
-|
 */
 
 $router->group(['prefix' => '/guilds'], function ($router) {
@@ -48,10 +42,18 @@ $router->group(['prefix' => '/guilds'], function ($router) {
 
 /*
 |--------------------------------------------------------------------------
-| Explicit bindings
+| /guildwars routes
 |--------------------------------------------------------------------------
-|
-|
+*/
+
+$router->group(['prefix' => '/guildwars'], function ($router) {
+    $router->name('guildwars')->get('/', 'Guildwars\GuildwarsController@index');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Model bindings
+|--------------------------------------------------------------------------
 */
 
 $router->model('guild', \Bitaac\Contracts\Guild::class);

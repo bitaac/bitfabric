@@ -37,6 +37,7 @@ class GuildServiceProvider extends AggregateServiceProvider
         'can.invite' => Middleware\CanInviteMiddleware::class,
         'has.owner'  => Middleware\HasOwnerMiddleware::class,
         'has.invite' => Middleware\HasInviteMiddleware::class,
+        'guildwars.enabled' => Middleware\GuildwarsEnabledMiddleware::class,
     ];
 
     /**

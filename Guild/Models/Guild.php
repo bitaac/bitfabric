@@ -2,6 +2,7 @@
 
 namespace Bitaac\Guild\Models;
 
+use Bitaac\Guild\Models\GuildWar;
 use Bitaac\Contracts\Guild as Contract;
 use Bitaac\Core\Database\Eloquent\Model;
 
@@ -129,5 +130,17 @@ class Guild extends Model implements Contract
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    /**
+     * Get all the wars guild is involved in.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getWars()
+    {
+        return GuildWar::where(function ($query) {
+            $query->where('guild1', $this->id)->orWhere('guild2', $this->id);
+        })->get();
     }
 }
