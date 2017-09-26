@@ -83,14 +83,14 @@ class BitfabricServiceProvider extends AggregateServiceProvider
             if (file_exists($path = base_path('routes/extensions.php'))) {
                 require_once $path;
             }
-        });
 
-        $this->exceptions->handle(ModelNotFoundException::class, function ($e) {
-            return new Response(view('bitaac::errors.404'), 404);
-        });
+            $this->exceptions->handle(ModelNotFoundException::class, function ($e) {
+                return new Response(view('bitaac::errors.404'), 404);
+            });
 
-        $this->exceptions->handle(NotFoundHttpException::class, function ($e) {
-            return new Response(view('bitaac::errors.404'), 404);
+            $this->exceptions->handle(NotFoundHttpException::class, function ($e) {
+                return new Response(view('bitaac::errors.404'), 404);
+            });
         });
 
         parent::register();
