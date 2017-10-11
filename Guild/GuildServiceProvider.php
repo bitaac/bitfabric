@@ -51,6 +51,8 @@ class GuildServiceProvider extends AggregateServiceProvider
         $this->publishes([
             __DIR__.'/Resources/Config' => config_path('bitaac'),
         ], 'bitaac:config');
+
+        $this->loadTranslationsFrom(__DIR__.'/Resources/Lang', 'bitaac');
     }
 
     /**
