@@ -39,9 +39,11 @@ class RegisterController extends Controller
      */
     public function post(RegisterRequest $request)
     {
-        $account = app('account')->create($request->only([
+        $data = $request->only([
             'name', 'email', 'password'
-        ]));
+        ]);
+
+        $account = app('account')->create(array_merge($data, ['creation' => time()]));
 
         $this->auth->login($account);
 

@@ -16,7 +16,7 @@ class Account extends Model implements Contract
      *
      * @var array
      */
-    protected $fillable = ['name', 'secret', 'type', 'premdays', 'lastday', 'email', 'password'];
+    protected $fillable = ['name', 'secret', 'type', 'premdays', 'lastday', 'email', 'password', 'creation'];
 
     /**
      * The table associated with the model.
