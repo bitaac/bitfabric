@@ -94,6 +94,8 @@ class BitfabricServiceProvider extends AggregateServiceProvider
         });
 
         parent::register();
+
+        $this->app->register(HashServiceProvider::class);
     }
 
     /**

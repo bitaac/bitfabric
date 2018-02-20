@@ -5,6 +5,17 @@ namespace Bitaac\Libraries;
 class SHAHasher implements \Illuminate\Contracts\Hashing\Hasher
 {
     /**
+     * Get information about the given hashed value.
+     *
+     * @param  string  $hashedValue
+     * @return array
+     */
+    public function info($hashedValue)
+    {
+        return password_get_info($hashedValue);
+    }
+
+    /**
      * Hash the given value.
      *
      * @param  string  $value
@@ -39,5 +50,16 @@ class SHAHasher implements \Illuminate\Contracts\Hashing\Hasher
     public function needsRehash($hashedValue, array $options = [])
     {
         return false;
+    }
+
+    /**
+     * Get a driver instance.
+     *
+     * @param  string  $driver
+     * @return mixed
+     */
+    public function driver($driver = null)
+    {
+        return $this;
     }
 }
