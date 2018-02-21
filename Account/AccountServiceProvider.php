@@ -3,46 +3,19 @@
 namespace Bitaac\Account;
 
 use Bitaac\Account\Http\Middleware;
+use Illuminate\Support\ServiceProvider;
 use Bitaac\Account\RouteServiceProvider;
-use Bitaac\Core\Providers\AggregateServiceProvider;
 
-class AccountServiceProvider extends AggregateServiceProvider
+class AccountServiceProvider extends ServiceProvider
 {
     /**
-     * The provider class names.
-     *
-     * @var array
-     */
-    protected $providers = [
-        RouteServiceProvider::class,
-    ];
-
-    /**
-     * The provider migration paths.
-     *
-     * @var array
-     */
-    protected $migrations = [
-        __DIR__.'/Resources/Migrations',
-    ];
-
-    /**
-     * The application's route middleware.
-     *
-     * @var array
-     */
-    protected $routeMiddleware = [
-        'email.update' => Middleware\EmailUpdateMiddleware::class,
-    ];
-
-    /**
-     * Bootstrap the application events.
+     * Bootstrap any application services.
      *
      * @return void
      */
     public function boot()
     {
-        parent::boot();
+        $this->loadMigrationsFrom(__DIR__.'/Resources/Migrations');
 
         $this->publishes([
             __DIR__.'/Resources/Config' => config_path('bitaac'),
@@ -50,7 +23,7 @@ class AccountServiceProvider extends AggregateServiceProvider
     }
 
     /**
-     * Register any application services.
+     * Register bindings in the container.
      *
      * @return void
      */
@@ -60,6 +33,8 @@ class AccountServiceProvider extends AggregateServiceProvider
             \Bitaac\Account\Resources\Seeds\DatabaseSeeder::class
         );
 
-        parent::register();
+        $this->app->register(RouteServiceProvider::class);
+
+        $this->app['router']->aliasMiddleware('email.update', Middleware\EmailUpdateMiddleware::class);
     }
 }

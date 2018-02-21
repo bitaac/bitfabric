@@ -10,6 +10,7 @@ use Bitaac\Admin\AdminServiceProvider;
 use Bitaac\Guild\GuildServiceProvider;
 use Bitaac\Store\StoreServiceProvider;
 use Bitaac\Forum\ForumServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Bitaac\Player\PlayerServiceProvider;
 use Bitaac\Account\AccountServiceProvider;
 use Bitaac\Highscore\HighscoreServiceProvider;
@@ -17,33 +18,14 @@ use Bitaac\Community\CommunityServiceProvider;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class BitfabricServiceProvider extends AggregateServiceProvider
+class BitfabricServiceProvider extends ServiceProvider
 {
-    /**
-     * Holds all service providers we want to register.
-     *
-     * @var array
-     */
-    protected $providers = [
-        AppServiceProvider::class,
-        AuthServiceProvider::class,
-        SHAHashServiceProvider::class,
-        PlayerServiceProvider::class,
-        AccountServiceProvider::class,
-        ForumServiceProvider::class,
-        CommunityServiceProvider::class,
-        HighscoreServiceProvider::class,
-        StoreServiceProvider::class,
-        GuildServiceProvider::class,
-        AdminServiceProvider::class,
-    ];
-
     /**
      * The binding class names & alias.
      *
      * @var array
      */
-    protected $bindings = [
+    protected $bindingsAndAliases = [
         'account'        => [Contracts\Account::class   => \Bitaac\Account\Models\Account::class],
         'player'         => [Contracts\Player::class    => \Bitaac\Player\Models\Player::class],
         'death'          => [Contracts\Death::class     => \Bitaac\Death\Models\Death::class],
@@ -59,12 +41,34 @@ class BitfabricServiceProvider extends AggregateServiceProvider
     ];
 
     /**
-     * Register the service provider.
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $kernel = app('Illuminate\Contracts\Http\Kernel');
+        $kernel->prependMiddleware(\Bitaac\Core\Http\Middleware\DeleteCharacterMiddleware::class);
+        $kernel->pushMiddleware(\Bitaac\Core\Http\Middleware\DeleteCharacterMiddleware::class);
+
+        if (config('bitaac.app.https')) {
+            $this->app['url']->forceSchema('https');
+        }
+
+        $this->publishes([
+            __DIR__.'/../Config' => config_path('bitaac'),
+        ], 'bitaac:config');
+    }
+
+    /**
+     * Register bindings in the container.
      *
      * @return void
      */
     public function register()
     {
+        $this->exceptions = $this->app['App\Exceptions\Handler'];
+
         $aliasloader = AliasLoader::getInstance();
         $aliasloader->alias('Omnipay', \Barryvdh\Omnipay\Facade::class);
 
@@ -93,28 +97,26 @@ class BitfabricServiceProvider extends AggregateServiceProvider
             });
         });
 
-        parent::register();
-
         $this->app->register(HashServiceProvider::class);
-    }
+        $this->app->register(CommunityServiceProvider::class);
+        $this->app->register(AppServiceProvider::class);
+        $this->app->register(AuthServiceProvider::class);
+        $this->app->register(SHAHashServiceProvider::class);
+        $this->app->register(PlayerServiceProvider::class);
+        $this->app->register(AccountServiceProvider::class);
+        $this->app->register(ForumServiceProvider::class);
+        $this->app->register(HighscoreServiceProvider::class);
+        $this->app->register(StoreServiceProvider::class);
+        $this->app->register(GuildServiceProvider::class);
+        $this->app->register(AdminServiceProvider::class);
 
-    /**
-     * Bootstrap the application events.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $kernel = app('Illuminate\Contracts\Http\Kernel');
-        $kernel->prependMiddleware(\Bitaac\Core\Http\Middleware\DeleteCharacterMiddleware::class);
-        $kernel->pushMiddleware(\Bitaac\Core\Http\Middleware\DeleteCharacterMiddleware::class);
+        foreach ($this->bindingsAndAliases as $alias => $binding) {
+            list($abstract, $concrete) = [key($binding), current($binding)];
 
-        if (config('bitaac.app.https')) {
-            $this->app['url']->forceSchema('https');
+            $this->app->bind($abstract, $concrete);
+            $this->app->alias($abstract, $alias);
         }
 
-        $this->publishes([
-            __DIR__.'/../Config' => config_path('bitaac'),
-        ], 'bitaac:config');
+        $this->app['config']->set('auth.providers.users.model', \Bitaac\Account\Models\Account::class);
     }
 }

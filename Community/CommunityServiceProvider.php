@@ -2,18 +2,21 @@
 
 namespace Bitaac\Community;
 
-use Bitaac\Core\Providers\AggregateServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class CommunityServiceProvider extends AggregateServiceProvider
+class CommunityServiceProvider extends ServiceProvider
 {
     /**
-     * The provider routes file paths.
+     * Register bindings in the container.
      *
-     * @var array
+     * @return void
      */
-    protected $routes = [
-        'Bitaac\Community\Http\Controllers' => __DIR__.'/Http/routes.php',
-    ];
+    public function register()
+    {
+        $this->publishes([
+            __DIR__.'/Resources/Config' => config_path('bitaac'),
+        ], 'bitaac:config');
+    }
 
     /**
      * Bootstrap the application events.
@@ -22,11 +25,7 @@ class CommunityServiceProvider extends AggregateServiceProvider
      */
     public function boot()
     {
-        parent::boot();
-
-        $this->publishes([
-            __DIR__.'/Resources/Config' => config_path('bitaac'),
-        ], 'bitaac:config');
+        $this->app->register(RouteServiceProvider::class);
     }
 }
 

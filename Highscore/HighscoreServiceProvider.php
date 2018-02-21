@@ -2,30 +2,29 @@
 
 namespace Bitaac\Highscore;
 
-use Bitaac\Core\Providers\AggregateServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class HighscoreServiceProvider extends AggregateServiceProvider
+class HighscoreServiceProvider extends ServiceProvider
 {
     /**
-     * The provider routes file paths.
-     *
-     * @var array
-     */
-    protected $routes = [
-        'Bitaac\Highscore\Http\Controllers' => __DIR__.'/Http/routes.php',
-    ];
-
-    /**
-     * Bootstrap the application events.
+     * Bootstrap any application services.
      *
      * @return void
      */
     public function boot()
     {
-        parent::boot();
-
         $this->publishes([
             __DIR__.'/Resources/Config' => config_path('bitaac'),
         ], 'bitaac:config');
+    }
+
+    /**
+     * Register bindings in the container.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->register(RouteServiceProvider::class);
     }
 }

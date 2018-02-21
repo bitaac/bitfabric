@@ -41,7 +41,7 @@ abstract class AggregateServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $bindings = [];
+    protected $bindingsAndAliases = [];
 
     /**
      * The commands class names.
@@ -114,7 +114,7 @@ abstract class AggregateServiceProvider extends ServiceProvider
         $this->registerMiddleware();
         $this->registerRouteMiddleware();
         $this->registerProviders();
-        $this->registerBindings();
+        $this->registerBindingsAndAliases();
         $this->registerCommands();
         $this->registerEvents();
     }
@@ -175,15 +175,15 @@ abstract class AggregateServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerBindings()
+    protected function registerBindingsAndAliases()
     {
-        if (! isset($this->bindings)) {
+        if (! isset($this->bindingsAndAliases)) {
             return;
         }
 
-        foreach ($this->bindings as $alias => $binding) {
+        foreach ($this->bindingsAndAliases as $alias => $binding) {
             list($abstract, $concrete) = [key($binding), current($binding)];
-            
+
             $this->app->bind($abstract, $concrete);
             $this->app->alias($abstract, $alias);
         }

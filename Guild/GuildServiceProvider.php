@@ -4,64 +4,36 @@ namespace Bitaac\Guild;
 
 use Illuminate\Http\Response;
 use Bitaac\Guild\Http\Middleware;
-use Bitaac\Core\Providers\AggregateServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Bitaac\Guild\Exceptions\NotFoundGuildException;
 
-class GuildServiceProvider extends AggregateServiceProvider
+class GuildServiceProvider extends ServiceProvider
 {
     /**
-     * The provider routes file paths.
-     *
-     * @var array
-     */
-    protected $routes = [
-        'Bitaac\Guild\Http\Controllers' => __DIR__.'/Http/routes.php',
-    ];
-
-    /**
-     * The provider migration paths.
-     *
-     * @var array
-     */
-    protected $migrations = [
-        __DIR__.'/Resources/Migrations',
-    ];
-
-    /**
-     * The application's route middleware.
-     *
-     * @var array
-     */
-    protected $routeMiddleware = [
-        'can.edit'   => Middleware\CanEditMiddleware::class,
-        'can.invite' => Middleware\CanInviteMiddleware::class,
-        'has.owner'  => Middleware\HasOwnerMiddleware::class,
-        'has.invite' => Middleware\HasInviteMiddleware::class,
-    ];
-
-    /**
-     * Bootstrap the application events.
+     * Bootstrap any application services.
      *
      * @return void
      */
     public function boot()
     {
-        parent::boot();
-
         $this->publishes([
             __DIR__.'/Resources/Config' => config_path('bitaac'),
         ], 'bitaac:config');
 
         $this->loadTranslationsFrom(__DIR__.'/Resources/Lang', 'bitaac');
+
+        $this->loadMigrationsFrom(__DIR__.'/Resources/Migrations');
     }
 
     /**
-     * Register any application services.
+     * Register bindings in the container.
      *
      * @return void
      */
     public function register()
     {
+        $this->exceptions = $this->app['App\Exceptions\Handler'];
+
         $this->app['seed.handler']->register(
             \Bitaac\Guild\Resources\Seeds\DatabaseSeeder::class
         );
@@ -70,6 +42,11 @@ class GuildServiceProvider extends AggregateServiceProvider
             return new Response(view('bitaac::errors.404'), 404);
         });
 
-        parent::register();
+        $this->app->register(RouteServiceProvider::class);
+
+        $this->app['router']->aliasMiddleware('can.edit', Middleware\CanEditMiddleware::class);
+        $this->app['router']->aliasMiddleware('can.invite', Middleware\CanInviteMiddleware::class);
+        $this->app['router']->aliasMiddleware('has.owner', Middleware\HasOwnerMiddleware::class);
+        $this->app['router']->aliasMiddleware('has.invite', Middleware\HasInviteMiddleware::class);
     }
 }

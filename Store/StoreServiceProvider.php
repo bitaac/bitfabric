@@ -4,62 +4,56 @@ namespace Bitaac\Store;
 
 use Illuminate\Http\Response;
 use Bitaac\Store\Http\Middleware;
-use Bitaac\Core\Providers\AggregateServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Bitaac\Store\Exceptions\NotFoundProductException;
 
-class StoreServiceProvider extends AggregateServiceProvider
+class StoreServiceProvider extends ServiceProvider
 {
-    /**
-     * The provider routes file paths.
-     *
-     * @var array
-     */
-    protected $routes = [
-        'Bitaac\Store\Http\Controllers' => __DIR__.'/Http/routes.php',
-    ];
-
-    /**
-     * The provider migration paths.
-     *
-     * @var array
-     */
-    protected $migrations = [
-        __DIR__.'/Resources/Migrations',
-    ];
-
-    /**
-     * The application's route middleware.
-     *
-     * @var array
-     */
-    protected $routeMiddleware = [
-        'can.claim' => Middleware\CanClaimMiddleware::class,
-    ];
-
     /**
      * Holds all contracts and models we want to bind.
      *
      * @var array
      */
-    protected $bindings = [
+    protected $bindingsAndAliases = [
         'store.product' => [\Bitaac\Contracts\StoreProduct::class => \Bitaac\Store\Models\StoreProduct::class],
     ];
 
     /**
-     * Bootstrap the application events.
+     * Bootstrap any application services.
      *
      * @return void
      */
     public function boot()
     {
-        parent::boot();
+        $this->loadMigrationsFrom(__DIR__.'/Resources/Migrations');
 
         $this->publishes([
             __DIR__.'/Resources/Config' => config_path('bitaac'),
         ], 'bitaac:config');
 
+        foreach ($this->bindingsAndAliases as $alias => $binding) {
+            list($abstract, $concrete) = [key($binding), current($binding)];
+
+            $this->app->bind($abstract, $concrete);
+            $this->app->alias($abstract, $alias);
+        }
+    }
+
+    /**
+     * Register bindings in the container.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->exceptions = $this->app['App\Exceptions\Handler'];
+
         $this->exceptions->handle(NotFoundProductException::class, function ($e) {
             return new Response(view('bitaac::errors.404'), 404);
         });
+
+        $this->app['router']->aliasMiddleware('can.claim', Middleware\CanClaimMiddleware::class);
+
+        $this->app->register(RouteServiceProvider::class);
     }
 }

@@ -2,20 +2,20 @@
 
 namespace Bitaac\Auth;
 
-use Bitaac\Account\Http\Middleware;
 use Bitaac\Auth\RouteServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Bitaac\Auth\LaravelAuthServiceProvider;
-use Bitaac\Core\Providers\AggregateServiceProvider;
 
-class AuthServiceProvider extends AggregateServiceProvider
+class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * The provider class names.
+     * Bootstrap any application services.
      *
-     * @var array
+     * @return void
      */
-    protected $providers = [
-        RouteServiceProvider::class,
-        LaravelAuthServiceProvider::class,
-    ];
+    public function boot()
+    {
+        $this->app->register(RouteServiceProvider::class);
+        $this->app->register(LaravelAuthServiceProvider::class);
+    }
 }
