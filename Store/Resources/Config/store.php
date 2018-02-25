@@ -15,7 +15,7 @@ return [
             'sandbox' => true,
             'currency' => 'USD',
             'presentable' => 'Paypal',
-            'omnipay' => 'PayPal_Rest',
+            'paysterify' => 'paysterify.paypal',
             'description' => 'Bitaac Donation Points',
             'client' => env('PAYPAL_CLIENT', 'XXX'),
             'secret' => env('PAYPAL_SECRET', 'XXX'),
