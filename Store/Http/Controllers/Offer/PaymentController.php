@@ -2,9 +2,9 @@
 
 namespace Bitaac\Store\Http\Controllers\Offer;
 
-use Omnipay\Omnipay;
 use Illuminate\Http\Request;
 use Bitaac\Store\Models\Payment;
+use \Facades\Paysterify\Paysterify;
 use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
@@ -42,27 +42,24 @@ class PaymentController extends Controller
 
         $config = (object) config("bitaac.store.gateways.$provider");
 
-        $gateway = Omnipay::create($config->omnipay);
-
         $params = [
-            'clientId'      => $config->client,
-            'secret'        => $config->secret,
-            'testMode'      => $config->sandbox,
-            'returnUrl'     => route('gateway.return', ['gateway' => $provider]),
-            'cancelUrl'     => route('gateway.cancel', ['gateway' => $provider]),
             'amount'        => $request->get('amount'),
             'currency'      => $config->currency,
+
+            'sandbox'       => $config->sandbox,
             'description'   => $config->description,
+
+            'client'        => $config->client,
+            'secret'        => $config->secret,
+            'url_return'    => route('gateway.return', ['gateway' => $provider]),
+            'url_cancel'    => route('gateway.cancel', ['gateway' => $provider]),
         ];
 
-        $gateway->initialize($params);
-
-        $response = $gateway->purchase($params)->send();
+        $paysterify = Paysterify::gateway($config->paysterify)->configure($params)->purchase();
 
         $request->session()->put('params', $params);
-        $request->session()->put('transactionReference', $response->getTransactionReference());
 
-        return $response->getRedirectResponse();
+        return $paysterify->redirect();
     }
 
     /**
@@ -73,27 +70,20 @@ class PaymentController extends Controller
      */
     public function return(Request $request, $provider)
     {
+        $params = $request->session()->get('params');
         $config = (object) config("bitaac.store.gateways.$provider");
 
-        $gateway = Omnipay::create($config->omnipay);
-
-        $params = $request->session()->get('params');
-
-        $gateway->initialize($params);
-
-        $transaction = $gateway->completePurchase(array_merge($request->session()->get('params'), [
-            'transactionReference' => $request->session()->get('transactionReference'),
+        $paysterify = Paysterify::gateway($config->paysterify)->configure($params)->completePurchase([
+            'paymentId' => $request->get('paymentId'),
             'payerId' => $request->get('PayerID'),
-        ]));
-
-        $response = $transaction->send();
+        ]);
 
         // Make sure the payment was successful.
-        if (! $response->isSuccessful()) {
+        if (! $paysterify->isCompleted()) {
             return back()->withErrors('Something went wrong.');
         }
 
-        $data = (object) $response->getData();
+        $data = $paysterify->getResponse();
 
         $payment = Payment::where(function ($query) use ($data, $provider) {
             $query->where('payment_id', $data->id);
@@ -108,10 +98,10 @@ class PaymentController extends Controller
         $payment = new Payment;
         $payment->payment_id = $data->id;
         $payment->method = $provider;
-        $payment->currency = $transaction->getCurrency();
-        $payment->amount = $transaction->getAmount();
+        $payment->currency = $paysterify->getCurrency();
+        $payment->amount = $paysterify->getAmount();
         $payment->account_id = auth()->user()->id;
-        $payment->points = config("bitaac.store.gateways.$provider.offers")[$transaction->getAmount()];
+        $payment->points = config("bitaac.store.gateways.$provider.offers")[$paysterify->getAmount()];
         $payment->save();
 
         $user = auth()->user()->bitaac;
