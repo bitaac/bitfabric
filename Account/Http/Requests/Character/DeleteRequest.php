@@ -2,11 +2,14 @@
 
 namespace Bitaac\Account\Http\Requests\Character;
 
+use Bitaac\Traits\Overwriteable;
 use Bitaac\Core\Rules\OwnsCharacter;
 use Bitaac\Core\Foundation\Http\FormRequest;
 
 class DeleteRequest extends FormRequest
 {
+    use Overwriteable;
+    
     public function rules()
     {
         return [

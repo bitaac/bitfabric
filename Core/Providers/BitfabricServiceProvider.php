@@ -128,5 +128,9 @@ class BitfabricServiceProvider extends ServiceProvider
         });
         
         $aliasloader->alias('Bitaac', \Bitaac\Core\Facades\Bitaac::class);
+
+        $this->app->singleton('Bitaac\Core\Configurations\TwoFactorAuthConfiguration', function ($app) {
+            return new \Bitaac\Core\Configurations\TwoFactorAuthConfiguration();
+        });
     }
 }

@@ -2,10 +2,13 @@
 
 namespace Bitaac\Account\Http\Requests\Change;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Bitaac\Traits\Overwriteable;
+use Bitaac\Core\Foundation\Http\FormRequest;
 
 class EmailRequest extends FormRequest
 {
+    use Overwriteable;
+    
     /**
      * Determine if the user is authorized to make this request.
      *

@@ -1,14 +1,14 @@
 <?php
 
-namespace Bitaac\Account\Http\Requests\Character;
+namespace Bitaac\Player\Http\Requests;
 
 use Bitaac\Traits\Overwriteable;
 use Bitaac\Core\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class SearchRequest extends FormRequest
 {
     use Overwriteable;
-    
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,10 +27,7 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'     => ['required', 'between:3,20', 'charname', 'blacklisted', 'unique:players,name'],
-            'gender'   => ['required', 'in_config:bitaac.character.create-genders'],
-            'vocation' => ['required', 'in_config:bitaac.character.create-vocations'],
-            'town'     => ['required', 'in_config:bitaac.character.create-towns'],
+            'name' => ['required', 'exists:players'],
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Bitaac\Auth\Http\Controllers;
 
+use Bitaac;
 use Illuminate\Contracts\Auth\Guard;
 use App\Http\Controllers\Controller;
 use Bitaac\Auth\Http\Requests\RegisterRequest;
@@ -50,7 +51,7 @@ class RegisterController extends Controller
         $bitaac = $account->bitaac;
         $bitaac->updateLastLogin();
 
-        if (config('bitaac.account.two-factor', false)) {
+        if (Bitaac::twofa()->enabled()) {
             $bitaac->generateSecret();
         }
 

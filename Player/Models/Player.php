@@ -82,7 +82,7 @@ class Player extends Model implements Contract
     public function link()
     {
         return url_e('/character/:name', [
-            'name' => $this->name,
+            'name' => $this->slug,
         ]);
     }
 

@@ -2,11 +2,14 @@
 
 namespace Bitaac\Forum\Http\Requests\Thread;
 
+use Bitaac\Traits\Overwriteable;
 use Bitaac\Core\Rules\OwnsCharacter;
 use Bitaac\Core\Foundation\Http\FormRequest;
 
 class CreateRequest extends FormRequest
 {
+    use Overwriteable;
+    
     /**
      * Determine if the user is authorized to make this request.
      *

@@ -21,6 +21,20 @@ class Bitaac
     protected $accountNameField = 'name';
 
     /**
+     * Holding the account password field.
+     *
+     * @var string
+     */
+    protected $accountPasswordField = 'password';
+
+    /**
+     * Holding all overwritten rules.
+     *
+     * @var array
+     */
+    protected $rules = [];
+
+    /**
      * Extend given class method.
      *
      * @param  string   $namespace
@@ -61,5 +75,69 @@ class Bitaac
     public function getAccountNameField()
     {
         return $this->accountNameField;
+    }
+
+    /**
+     * Set the account password field.
+     *
+     * @return string
+     */
+    public function setAccountPasswordField($field)
+    {
+        $this->accountPasswordField = $field;
+    }
+
+    /**
+     * Get the account password field.
+     *
+     * @return string
+     */
+    public function getAccountPasswordField()
+    {
+        return $this->accountPasswordField;
+    }
+
+    /**
+     * Get the two factor authentication configurator instance.
+     *
+     * @return \Bitaac\Core\Configurations\TwoFactorAuthConfiguration
+     */
+    public function twofa()
+    {
+        return resolve(\Bitaac\Core\Configurations\TwoFactorAuthConfiguration::class);
+    }
+
+    /**
+     * Overwrite validation rules to given request.
+     *
+     * @return void
+     */
+    public function rules($request, $closure)
+    {
+        $this->rules[$request] = $closure;
+    }
+
+    /**
+     * Determine if given request rules has been overwritten.
+     *
+     * @return true
+     */
+    public function hasRules($request)
+    {
+        $class = get_class($request);
+
+        return isset($this->rules[$class]);
+    }
+
+    /**
+     * Get the given requeest overwritten rules.
+     *
+     * @return true
+     */
+    public function getRules($request)
+    {
+        $class = get_class($request);
+
+        return $this->hasRules($request) ? call_user_func_array($this->rules[$class], [$request]) : [];
     }
 }

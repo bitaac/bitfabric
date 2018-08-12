@@ -4,6 +4,7 @@ namespace Bitaac\Player\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Bitaac\Player\Http\Requests\SearchRequest;
 
 class SearchController extends Controller
 {
@@ -20,14 +21,11 @@ class SearchController extends Controller
     /**
      * Search for a character.
      *
+     * @param  \Bitaac\Player\Http\Requests\SearchRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function post(Request $request)
+    public function post(SearchRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|exists:players,name',
-        ]);
-
         return redirect(url_e('/character/:name', ['name' => $request->get('name')]));
     }
 }
