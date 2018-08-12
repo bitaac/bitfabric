@@ -2,6 +2,7 @@
 
 namespace Bitaac\Account\Models;
 
+use Bitaac;
 use Carbon\Carbon;
 use Bitaac\Traits\Authenticatable;
 use Bitaac\Core\Database\Eloquent\Model;
@@ -270,5 +271,15 @@ class Account extends Model implements Contract
      */
     public function setPasswordAttribute($password){
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    /**
+     * Get the account name.
+     *
+     * @return integer|string
+     */
+    public function getName()
+    {
+        return $this->getAttribute(Bitaac::getAccountNameField());
     }
 }
