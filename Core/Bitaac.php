@@ -14,6 +14,13 @@ class Bitaac
     protected static $extended = [];
 
     /**
+     * Holding the account name field.
+     *
+     * @var string
+     */
+    protected $accountNameField = 'name';
+
+    /**
      * Extend given class method.
      *
      * @param  string   $namespace
@@ -34,5 +41,25 @@ class Bitaac
     public static function extended($namespace = null)
     {
         return is_null($namespace) ? static::$extended : static::$extended[$namespace];
+    }
+
+    /**
+     * Set the account name field.
+     *
+     * @return string
+     */
+    public function setAccountNameField($field)
+    {
+        $this->accountNameField = $field;
+    }
+
+    /**
+     * Get the account name field.
+     *
+     * @return string
+     */
+    public function getAccountNameField()
+    {
+        return $this->accountNameField;
     }
 }
