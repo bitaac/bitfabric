@@ -2,6 +2,7 @@
 
 namespace Bitaac\Auth\Http\Controllers;
 
+use Bitaac;
 use Google2FA;
 use Illuminate\Contracts\Auth\Guard;
 use App\Http\Controllers\Controller;
@@ -42,8 +43,8 @@ class LoginController extends Controller
     public function post(LoginRequest $request)
     {
         $user = app('account')->where(function ($query) use ($request) {
-            $query->where('name', $request->get('account'));
-            $query->where('password', bcrypt($request->get('password')));
+            $query->where(Bitaac::getAccountNameField(), $request->get('account'));
+            $query->where(Bitaac::getAccountPasswordField(), bcrypt($request->get('password')));
         });
 
         if (! $user->exists()) {
@@ -54,7 +55,7 @@ class LoginController extends Controller
 
         $user = $user->first();
 
-        if ($user->secret && config('bitaac.account.two-factor')) {
+        if ($user->secret && Bitaac::twofa()->enabled()) {
             if (! $request->filled('2fa')) {
                 return back()->withError(trans('auth.login.2fa.required'));
             }

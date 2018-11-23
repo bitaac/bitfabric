@@ -2,10 +2,13 @@
 
 namespace Bitaac\Auth\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Bitaac\Traits\Overwriteable;
+use Bitaac\Core\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
 {
+    use Overwriteable;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,7 +29,7 @@ class RegisterRequest extends FormRequest
         return [
             'name'     => ['required', 'between:4,23', 'alpha_num', 'unique:accounts,name'],
             'email'    => ['required', 'email', 'unique:accounts'],
-            'password' => ['required', 'confirmed', 'min:6'],
+            'password' => ['required', 'confirmed', 'min:6', 'max:255'],
             'terms'    => ['accepted'],
         ];
     }

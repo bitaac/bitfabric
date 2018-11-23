@@ -27,7 +27,7 @@ class EditController extends Controller
     public function form(Account $account)
     {
         return view('admin::account.edit')->with([
-            'editAccount' => $account,
+            'account' => $account,
         ]);
     }
 

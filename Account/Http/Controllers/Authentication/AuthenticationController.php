@@ -2,6 +2,7 @@
 
 namespace Bitaac\Account\Http\Controllers\Authentication;
 
+use Bitaac;
 use Google2FA;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,7 +24,7 @@ class AuthenticationController extends Controller
         $this->auth = $auth;
 
         $this->middleware(function ($request, $next) {
-            if (! config('bitaac.account.two-factor')) {
+            if (Bitaac::twofa()->disabled()) {
                 return redirect()->route('account');
             }
 

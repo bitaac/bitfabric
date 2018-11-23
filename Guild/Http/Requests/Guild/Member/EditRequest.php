@@ -2,10 +2,13 @@
 
 namespace Bitaac\Guild\Http\Requests\Guild\Member;
 
+use Bitaac\Traits\Overwriteable;
 use Bitaac\Core\Foundation\Http\FormRequest;
 
 class EditRequest extends FormRequest
 {
+    use Overwriteable;
+    
     /**
      * Get the validation rules that apply to the request.
      *

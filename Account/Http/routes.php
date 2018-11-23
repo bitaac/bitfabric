@@ -7,14 +7,14 @@
 */
 
 $router->name('account')->get('/', 'AccountController@index');
-$router->name('account.logout')->get('/logout', 'AccountController@logout');
+$router->name('account.logout')->get('/logout', 'LogoutController@index');
+$router->post('/logout', 'LogoutController@post');
 
 /*
 |--------------------------------------------------------------------------
 | /account/password routes
 |--------------------------------------------------------------------------
 */
-
 
 $router->name('account.password')->get('/password', 'Change\PasswordController@form');
 $router->post('/password', 'Change\PasswordController@post');

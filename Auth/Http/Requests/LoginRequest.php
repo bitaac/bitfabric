@@ -2,10 +2,13 @@
 
 namespace Bitaac\Auth\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Bitaac\Traits\Overwriteable;
+use Bitaac\Core\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
 {
+    use Overwriteable;
+
     /**
      * Determine if the user is authorized to make this request.
      *

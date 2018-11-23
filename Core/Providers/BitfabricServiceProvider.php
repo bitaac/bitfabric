@@ -118,5 +118,19 @@ class BitfabricServiceProvider extends ServiceProvider
         }
 
         $this->app['config']->set('auth.providers.users.model', \Bitaac\Account\Models\Account::class);
+
+        $this->app->singleton('Bitaac\Core\Bitaac', function ($app) {
+            return new \Bitaac\Core\Bitaac();
+        });
+
+        $this->app->bind('bitaac', function () {
+            return resolve(\Bitaac\Core\Bitaac::class);
+        });
+        
+        $aliasloader->alias('Bitaac', \Bitaac\Core\Facades\Bitaac::class);
+
+        $this->app->singleton('Bitaac\Core\Configurations\TwoFactorAuthConfiguration', function ($app) {
+            return new \Bitaac\Core\Configurations\TwoFactorAuthConfiguration();
+        });
     }
 }

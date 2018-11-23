@@ -2,11 +2,14 @@
 
 namespace Bitaac\Guild\Http\Requests\Guilds;
 
+use Bitaac\Traits\Overwriteable;
 use Bitaac\Core\Rules\OwnsCharacter;
 use Bitaac\Core\Foundation\Http\FormRequest;
 
 class CreateRequest extends FormRequest
 {
+    use Overwriteable;
+    
     /**
      * Get the validation rules that apply to the request.
      *
