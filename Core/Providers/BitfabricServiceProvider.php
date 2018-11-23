@@ -15,6 +15,7 @@ use Bitaac\Player\PlayerServiceProvider;
 use Bitaac\Account\AccountServiceProvider;
 use Bitaac\Highscore\HighscoreServiceProvider;
 use Bitaac\Community\CommunityServiceProvider;
+use Bitaac\Core\Console\Commands\MigrateCommand;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -126,11 +127,15 @@ class BitfabricServiceProvider extends ServiceProvider
         $this->app->bind('bitaac', function () {
             return resolve(\Bitaac\Core\Bitaac::class);
         });
-        
+
         $aliasloader->alias('Bitaac', \Bitaac\Core\Facades\Bitaac::class);
 
         $this->app->singleton('Bitaac\Core\Configurations\TwoFactorAuthConfiguration', function ($app) {
             return new \Bitaac\Core\Configurations\TwoFactorAuthConfiguration();
+        });
+
+        $this->app->singleton('command.migrate', function ($app) {
+            return new MigrateCommand($app['migrator']);
         });
     }
 }
