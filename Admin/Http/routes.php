@@ -48,6 +48,9 @@ $router->name('admin.account.impersonate.stop')->get('/account/{account}/stopImp
 
 $router->name('admin.characters')->get('/characters', 'Characters\CharactersController@index');
 
+$router->name('admin.terms')->get('/terms', 'Misc\TermsController@get');
+$router->post('/terms', 'Misc\TermsController@post');
+
 
 /*
 |--------------------------------------------------------------------------

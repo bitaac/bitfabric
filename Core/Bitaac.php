@@ -140,4 +140,30 @@ class Bitaac
 
         return $this->hasRules($request) ? call_user_func_array($this->rules[$class], [$request]) : [];
     }
+
+    /**
+     * Get given database field value.
+     *
+     * @param  string  $field
+     * @return mixed
+     */
+    public function get($field)
+    {
+        return \Bitaac\Core\Models\Bitaac::firstOrCreate([
+            'id' => 1,
+        ])->{$field};
+    }
+
+    /**
+     * Set given database fields value.
+     *
+     * @param  array  $fields
+     * @return void
+     */
+    public function set($fields)
+    {
+        \Bitaac\Core\Models\Bitaac::firstOrCreate([
+            'id' => 1,
+        ])->update($fields);
+    }
 }

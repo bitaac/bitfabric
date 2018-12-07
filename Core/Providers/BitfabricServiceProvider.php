@@ -48,6 +48,8 @@ class BitfabricServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadMigrationsFrom(__DIR__.'/../Resources/Migrations');
+
         $kernel = app('Illuminate\Contracts\Http\Kernel');
         $kernel->prependMiddleware(\Bitaac\Core\Http\Middleware\DeleteCharacterMiddleware::class);
         $kernel->pushMiddleware(\Bitaac\Core\Http\Middleware\DeleteCharacterMiddleware::class);
