@@ -16,14 +16,14 @@ class PaymentsController extends Controller
     {
         $this->middleware(['auth', 'admin']);
     }
-    
+
     /**
-     * Show the payment logs page.
+     * [GET] /admin/payments
      *
      * @param  \Bitaac\Store\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function index(Payment $payment)
+    public function get(Payment $payment)
     {
         return view('admin::payments.index')->with([
             'payments' => $payment->orderBy('created_at', 'desc')->get(),

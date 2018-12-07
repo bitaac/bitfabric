@@ -19,12 +19,12 @@ class DeleteController extends Controller
     }
 
     /**
-     * Show the delete account page.
+     * [GET] /admin/account/{account}/delete
      *
      * @param  \Bitaac\Contracts\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function form(Account $account)
+    public function get(Account $account)
     {
         return view('admin::account.delete')->with([
             'editAccount' => $account,
@@ -32,7 +32,7 @@ class DeleteController extends Controller
     }
 
     /**
-     * Handle the delete account request.
+     * [POST] /admin/account/{account}/delete
      *
      * @param  \Illuminate\Http\Request   $request
      * @param  \Bitaac\Contracts\Account  $account

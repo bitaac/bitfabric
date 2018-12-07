@@ -19,20 +19,20 @@ class EditController extends Controller
     }
 
     /**
-     * Show the account edit page.
+     * [GET] /admin/account/{account}
      *
      * @param  \Bitaac\Contracts\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function form(Account $account)
+    public function get(Account $account)
     {
         return view('admin::account.edit')->with([
-            'account' => $account,
+            'editAccount' => $account,
         ]);
     }
 
     /**
-     * Handle the account edit request.
+     * [POST] /admin/account/{account}
      *
      * @param  \Bitaac\Admin\Http\Requests\Accounts\EditRequest  $request
      * @param  \Bitaac\Contracts\Account                         $account
@@ -44,9 +44,8 @@ class EditController extends Controller
             'name', 'secret', 'type', 'premdays', 'lastday', 'email'
         ]));
 
-        return back()->with([
+        return redirect()->route('admin.account.edit', $account)->with([
             'success' => 'Your changes has been saved.',
-            'editAccount' => $account,
         ]);
     }
 }

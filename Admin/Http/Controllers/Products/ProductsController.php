@@ -16,14 +16,14 @@ class ProductsController extends Controller
     {
         $this->middleware(['auth', 'admin']);
     }
-    
+
     /**
-     * Show the store products page.
+     * [GET] /admin/products
      *
      * @param  \Bitaac\Contracts\StoreProduct  $product
      * @return \Illuminate\Http\Response
      */
-    public function index(StoreProduct $product)
+    public function get(StoreProduct $product)
     {
         return view('admin::products.index')->with([
             'products' => $product->all(),

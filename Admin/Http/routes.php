@@ -6,50 +6,50 @@
 |--------------------------------------------------------------------------
 */
 
-$router->name('admin')->get('/', 'AdminController');
+Route::get('/', 'AdminController')->name('admin');
 
-$router->name('admin.payments')->get('/payments', 'Payments\PaymentsController@index');
+Route::get('/payments', 'Payments\PaymentsController@get')->name('admin.payments');
 
-$router->name('admin.products')->get('/products', 'Products\ProductsController@index');
+Route::get('/products', 'Products\ProductsController@get')->name('admin.products');
 
-$router->name('admin.products.create')->get('/products/create', 'Products\CreateController@form');
-$router->post('/products/create', 'Products\CreateController@post');
+Route::get('/products/create', 'Products\CreateController@get')->name('admin.products.create');
+Route::post('/products/create', 'Products\CreateController@post');
 
-$router->name('admin.product.edit')->get('/products/edit/{product}', 'Products\EditController@form');
-$router->post('/products/edit/{product}', 'Products\EditController@post');
+Route::get('/products/edit/{product}', 'Products\EditController@get')->name('admin.product.edit');
+Route::post('/products/edit/{product}', 'Products\EditController@post');
 
-$router->name('admin.product.delete')->get('/products/delete/{product}', 'Products\DeleteController@form');
-$router->post('/products/delete/{product}', 'Products\DeleteController@post');
+Route::get('/products/delete/{product}', 'Products\DeleteController@get')->name('admin.product.delete');
+Route::post('/products/delete/{product}', 'Products\DeleteController@post');
 
-$router->name('admin.boards')->get('/boards', 'Boards\BoardsController@index');
+Route::get('/boards', 'Boards\BoardsController@get')->name('admin.boards');
 
-$router->name('admin.boards.create')->get('/boards/create', 'Boards\CreateController@form');
-$router->post('/boards/create', 'Boards\CreateController@post');
+Route::get('/boards/create', 'Boards\CreateController@get')->name('admin.boards.create');
+Route::post('/boards/create', 'Boards\CreateController@post');
 
-$router->name('admin.board.edit')->get('/boards/edit/{board}', 'Boards\EditController@form');
-$router->post('/boards/edit/{board}', 'Boards\EditController@post');
+Route::get('/boards/edit/{board}', 'Boards\EditController@get')->name('admin.board.edit');
+Route::post('/boards/edit/{board}', 'Boards\EditController@post');
 
-$router->name('admin.board.delete')->get('/boards/delete/{board}', 'Boards\DeleteController@form');
-$router->post('/boards/delete/{board}', 'Boards\DeleteController@post');
+Route::get('/boards/delete/{board}', 'Boards\DeleteController@get')->name('admin.board.delete');
+Route::post('/boards/delete/{board}', 'Boards\DeleteController@post');
 
-$router->name('admin.accounts')->get('/accounts', 'Accounts\AccountsController@index');
+Route::get('/accounts', 'Accounts\AccountsController@get')->name('admin.accounts');
 
-$router->name('admin.account')->get('/account/{account}', 'Account\IndexController@index');
-$router->post('/account/{account}', 'Account\IndexController@post');
+Route::get('/account/{account}', 'Account\IndexController@get')->name('admin.account');
+Route::post('/account/{account}', 'Account\IndexController@post');
 
-$router->name('admin.account.edit')->get('/account/{account}/edit', 'Account\EditController@form');
-$router->post('/account/{account}/edit', 'Account\EditController@post');
+Route::get('/account/{account}/edit', 'Account\EditController@get')->name('admin.account.edit');
+Route::post('/account/{account}/edit', 'Account\EditController@post');
 
-$router->name('admin.account.delete')->get('/account/{account}/delete', 'Account\DeleteController@form');
-$router->post('/account/{account}/delete', 'Account\DeleteController@post');
+Route::get('/account/{account}/delete', 'Account\DeleteController@get')->name('admin.account.delete');
+Route::post('/account/{account}/delete', 'Account\DeleteController@post');
 
-$router->name('admin.account.impersonate')->get('/account/{account}/impersonate', 'Account\ImpersonationController@impersonate');
-$router->name('admin.account.impersonate.stop')->get('/account/{account}/stopImpersonating', 'Account\ImpersonationController@stopImpersonating');
+Route::get('/account/{account}/impersonate', 'Account\ImpersonationController@impersonate')->name('admin.account.impersonate');
+Route::get('/account/{account}/stopImpersonating', 'Account\ImpersonationController@stopImpersonating')->name('admin.account.impersonate.stop');
 
-$router->name('admin.characters')->get('/characters', 'Characters\CharactersController@index');
+Route::get('/characters', 'Characters\CharactersController@get')->name('admin.characters');
 
-$router->name('admin.terms')->get('/terms', 'Misc\TermsController@get');
-$router->post('/terms', 'Misc\TermsController@post');
+Route::get('/terms', 'Misc\TermsController@get')->name('admin.terms');
+Route::post('/terms', 'Misc\TermsController@post');
 
 
 /*
@@ -58,4 +58,4 @@ $router->post('/terms', 'Misc\TermsController@post');
 |--------------------------------------------------------------------------
 */
 
-$router->model('account', Bitaac\Contracts\Account::class);
+Route::model('account', Bitaac\Contracts\Account::class);

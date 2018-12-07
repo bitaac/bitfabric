@@ -17,19 +17,19 @@ class CreateController extends Controller
     {
         $this->middleware(['auth', 'admin']);
     }
-    
+
     /**
-     * Show the add new store product page.
+     * [GET] /admin/products/create
      *
      * @return \Illuminate\Http\Response
      */
-    public function form()
+    public function get()
     {
         return view('admin::products.create');
     }
 
     /**
-     * Handle the add new store product request.
+     * [POST] /admin/products/create
      *
      * @param  \Bitaac\Admin\Http\Requests\Products\CreateRequest  $request
      * @param  \Bitaac\Contracts\StoreProduct                      $product

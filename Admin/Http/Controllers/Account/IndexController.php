@@ -19,12 +19,12 @@ class IndexController extends Controller
     }
 
     /**
-     * Show the account page.
+     * [GET] /admin/account/{account}
      *
      * @param  \Bitaac\Contracts\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function index(Account $account)
+    public function get(Account $account)
     {
         return view('admin::account.index')->with([
             'editAccount' => $account,
@@ -32,7 +32,7 @@ class IndexController extends Controller
     }
 
     /**
-     * Handle the quick edit account request.
+     * [POST] /admin/account/{account}
      *
      * @param  \Illuminate\Http\Request   $request
      * @param  \Bitaac\Contracts\Account  $account

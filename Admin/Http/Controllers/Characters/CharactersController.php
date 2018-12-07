@@ -16,14 +16,14 @@ class CharactersController extends Controller
     {
         $this->middleware(['auth', 'admin']);
     }
-    
+
     /**
-     * Show the admin characters page.
+     * [GET] /admin/characters
      *
      * @param  \Bitaac\Contracts\Account  $product
      * @return \Illuminate\Http\Response
      */
-    public function index(Player $player)
+    public function get(Player $player)
     {
         return view('admin::characters.index')->with([
             'characters' => $player->all(),

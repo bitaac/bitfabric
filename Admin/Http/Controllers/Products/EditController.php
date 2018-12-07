@@ -17,14 +17,14 @@ class EditController extends Controller
     {
         $this->middleware(['auth', 'admin']);
     }
-    
+
     /**
-     * Show the edit store product page.
+     * [GET] /admin/products/edit/{product}
      *
      * @param  \Bitaac\Contracts\StoreProduct $product
      * @return \Illuminate\Http\Response
      */
-    public function form(StoreProduct $product)
+    public function get(StoreProduct $product)
     {
         return view('admin::products.edit')->with([
             'product' => $product,
@@ -32,7 +32,7 @@ class EditController extends Controller
     }
 
     /**
-     * Handle the edtir store product request.
+     * [POST] /admin/products/edit/{product}
      *
      * @param  \Bitaac\Contracts\StoreProduct                    $product
      * @param  \Bitaac\Admin\Http\Requests\Products\EditRequest  $request

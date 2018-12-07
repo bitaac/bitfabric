@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'images' => 'https://cdn.rawgit.com/pandaac-cdn/items/1076/{item_id}.gif',
+    'item_images' => 'http://items.znote.eu/{item_id}.gif',
 
     /*
     |--------------------------------------------------------------------------

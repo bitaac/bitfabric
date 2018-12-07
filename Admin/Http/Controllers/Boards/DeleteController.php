@@ -16,14 +16,14 @@ class DeleteController extends Controller
     {
         $this->middleware(['auth', 'admin']);
     }
-    
+
     /**
-     * Show the delete forum board page.
+     * [GET] /admin/boards/delete/{board}
      *
      * @param  \Bitaac\Contracts\Forum\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function form(Board $board)
+    public function get(Board $board)
     {
         return view('admin::boards.delete')->with([
             'board' => $board,
@@ -31,7 +31,7 @@ class DeleteController extends Controller
     }
 
     /**
-     * Handle the delete forum board request.
+     * [POST] /admin/boards/delete/{board}
      *
      * @param  \Bitaac\Forum\Models\Board  $board
      * @return \Illuminate\Http\Response

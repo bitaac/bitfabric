@@ -16,14 +16,14 @@ class BoardsController extends Controller
     {
         $this->middleware(['auth', 'admin']);
     }
-    
+
     /**
-     * Show the forum boards page.
+     * [GET] /admin/boards
      *
      * @param  \Bitaac\Contracts\Forum\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function index(Board $board)
+    public function get(Board $board)
     {
         return view('admin::boards.index')->with([
             'boards' => $board->all(),

@@ -17,19 +17,19 @@ class CreateController extends Controller
     {
         $this->middleware(['auth', 'admin']);
     }
-    
+
     /**
-     * Show the create forum board page.
+     * [GET] /admin/boards/create
      *
      * @return \Illuminate\Http\Response
      */
-    public function form()
+    public function get()
     {
         return view('admin::boards.create');
     }
 
     /**
-     * Handle the create forum board request.
+     * [POST] /admin/boards/create
      *
      * @param  \Bitaac\Admin\Http\Requests\Boards\CreateRequest  $request
      * @param  \Bitaac\Contracts\Forum\Board                      $board

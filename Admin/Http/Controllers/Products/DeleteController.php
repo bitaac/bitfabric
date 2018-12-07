@@ -16,14 +16,14 @@ class DeleteController extends Controller
     {
         $this->middleware(['auth', 'admin']);
     }
-    
+
     /**
-     * Show the delete store product page.
+     * [GET] /admin/products/delete/{product}
      *
      * @param  \Bitaac\Contracts\StoreProduct  $product
      * @return \Illuminate\Http\Response
      */
-    public function form(StoreProduct $product)
+    public function get(StoreProduct $product)
     {
         return view('admin::products.delete')->with([
             'product' => $product,
@@ -31,7 +31,7 @@ class DeleteController extends Controller
     }
 
     /**
-     * Handle the delete store product request.
+     * [POST] /admin/products/delete/{product}
      *
      * @param  \Bitaac\Contracts\StoreProduct  $product
      * @return \Illuminate\Http\Response

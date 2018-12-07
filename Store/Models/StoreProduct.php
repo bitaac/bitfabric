@@ -20,4 +20,9 @@ class StoreProduct extends Model implements Contract
     {
         return (bool) filter_var($this->image, FILTER_VALIDATE_URL);
     }
+
+    public function getItemImage()
+    {
+        return str_replace('{item_id}', $this->item_id, config('bitaac.app.item_images'));
+    }
 }

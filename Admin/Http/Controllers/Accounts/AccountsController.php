@@ -16,14 +16,14 @@ class AccountsController extends Controller
     {
         $this->middleware(['auth', 'admin']);
     }
-    
+
     /**
-     * Show the admin accounts page.
+     * [GET] /admin/accounts
      *
      * @param  \Bitaac\Contracts\Account  $product
      * @return \Illuminate\Http\Response
      */
-    public function index(Account $account)
+    public function get(Account $account)
     {
         return view('admin::accounts.index')->with([
             'accounts' => $account->all(),
