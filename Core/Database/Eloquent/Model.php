@@ -221,7 +221,7 @@ class Model extends Eloquent
      * @param  string|null  $secondKey
      * @return \Illuminate\Database\Eloquent\Relations\HasOneThrough
      */
-    public function hasOneThrough($related, $through, $firstKey = null, $secondKey = null, $localKey = null)
+    public function hasOneThrough($related, $through, $firstKey = null, $secondKey = null, $localKey = null, $secondLocalKey = null)
     {
         $through = app($through);
 
@@ -229,9 +229,11 @@ class Model extends Eloquent
 
         $secondKey = $secondKey ?: $through->getForeignKey();
 
-        $localKey = $localKey ?: $this->getKeyName();
-
-        return new HasOneThrough(app($related)->newQuery(), $this, $through, $firstKey, $secondKey, $localKey);
+        return $this->newHasOneThrough(
+            $this->newRelatedInstance($related)->newQuery(), $this, $through,
+            $firstKey, $secondKey, $localKey ?: $this->getKeyName(),
+            $secondLocalKey ?: $through->getKeyName()
+        );
     }
 
     /**

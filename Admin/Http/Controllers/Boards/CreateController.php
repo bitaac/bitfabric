@@ -3,7 +3,7 @@
 namespace Bitaac\Admin\Http\Controllers\Boards;
 
 use Bitaac\Contracts\Forum\Board;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Admin\Http\Requests\Boards\CreateRequest;
 
 class CreateController extends Controller

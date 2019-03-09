@@ -2,7 +2,7 @@
 
 namespace Bitaac\Guild\Http\Controllers\Guild\Member;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Guild\Http\Requests\Guild\Member\EditRequest;
 
 class EditController extends Controller

@@ -4,7 +4,7 @@ namespace Bitaac\Admin\Http\Controllers;
 
 use Bitaac\Contracts\Player;
 use Bitaac\Contracts\Account;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {

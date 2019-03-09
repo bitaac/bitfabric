@@ -3,7 +3,7 @@
 namespace Bitaac\Admin\Http\Controllers\Payments;
 
 use Bitaac\Store\Models\Payment;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class PaymentsController extends Controller
 {

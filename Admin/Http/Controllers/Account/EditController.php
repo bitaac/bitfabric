@@ -3,7 +3,7 @@
 namespace Bitaac\Admin\Http\Controllers\Account;
 
 use Bitaac\Contracts\Account;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Admin\Http\Requests\Accounts\EditRequest;
 
 class EditController extends Controller

@@ -2,7 +2,7 @@
 
 namespace Bitaac\Guild\Http\Controllers\Guild;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class ShowController extends Controller
 {

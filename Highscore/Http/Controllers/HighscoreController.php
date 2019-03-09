@@ -3,7 +3,7 @@
 namespace Bitaac\Highscore\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Core\Contracts\Highscore;
 
 class HighscoreController extends Controller

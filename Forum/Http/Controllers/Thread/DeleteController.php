@@ -2,7 +2,7 @@
 
 namespace Bitaac\Forum\Http\Controllers\Thread;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class DeleteController extends Controller
 {

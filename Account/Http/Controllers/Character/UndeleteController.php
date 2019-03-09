@@ -3,7 +3,7 @@
 namespace Bitaac\Account\Http\Controllers\Character;
 
 use Bitaac\Contracts\Player;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class UndeleteController extends Controller
 {

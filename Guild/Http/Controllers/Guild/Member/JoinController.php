@@ -3,7 +3,7 @@
 namespace Bitaac\Guild\Http\Controllers\Guild\Member;
 
 use Auth;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Guild\Http\Requests\Guild\Member\JoinRequest;
 
 class JoinController extends Controller

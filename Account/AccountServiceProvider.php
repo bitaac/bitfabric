@@ -18,7 +18,7 @@ class AccountServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/Resources/Migrations');
 
         $this->publishes([
-            __DIR__.'/Resources/Config' => config_path('bitaac'),
+            __DIR__.'/Resources/Config' => config_path(),
         ], 'bitaac:config');
     }
 

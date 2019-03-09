@@ -88,7 +88,7 @@ abstract class AggregateServiceProvider extends ServiceProvider
     public function __construct($app)
     {
         $this->app = $app;
-        $this->exceptions = $app['App\Exceptions\Handler'];
+        $this->exceptions = $app['Bitaac\Core\Exceptions\Handler'];
     }
 
     /**

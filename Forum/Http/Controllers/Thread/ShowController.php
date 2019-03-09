@@ -4,7 +4,7 @@ namespace Bitaac\Forum\Http\Controllers\Thread;
 
 use Bitaac\Contracts\Forum\Post;
 use Bitaac\Contracts\Forum\Board;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class ShowController extends Controller
 {

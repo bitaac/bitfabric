@@ -32,7 +32,7 @@ class GuildServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->exceptions = $this->app['App\Exceptions\Handler'];
+        $this->exceptions = $this->app['Bitaac\Core\Exceptions\Handler'];
 
         $this->app['seed.handler']->register(
             \Bitaac\Guild\Resources\Seeds\DatabaseSeeder::class

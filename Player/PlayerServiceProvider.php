@@ -30,7 +30,7 @@ class PlayerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->exceptions = $this->app['App\Exceptions\Handler'];
+        $this->exceptions = $this->app['Bitaac\Core\Exceptions\Handler'];
 
         $this->app['seed.handler']->register(
             \Bitaac\Player\Resources\Seeds\DatabaseSeeder::class

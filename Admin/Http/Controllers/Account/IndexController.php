@@ -4,7 +4,7 @@ namespace Bitaac\Admin\Http\Controllers\Account;
 
 use Illuminate\Http\Request;
 use Bitaac\Contracts\Account;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {

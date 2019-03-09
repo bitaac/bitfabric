@@ -37,7 +37,7 @@ class ForumServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->exceptions = $this->app['App\Exceptions\Handler'];
+        $this->exceptions = $this->app['Bitaac\Core\Exceptions\Handler'];
 
         $this->app['seed.handler']->register(
             \Bitaac\Forum\Resources\Seeds\DatabaseSeeder::class

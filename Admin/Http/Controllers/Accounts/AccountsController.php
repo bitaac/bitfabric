@@ -3,7 +3,7 @@
 namespace Bitaac\Admin\Http\Controllers\Accounts;
 
 use Bitaac\Contracts\Account;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class AccountsController extends Controller
 {

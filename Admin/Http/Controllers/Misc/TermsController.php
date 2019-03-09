@@ -4,7 +4,7 @@ namespace Bitaac\Admin\Http\Controllers\Misc;
 
 use Bitaac;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class TermsController extends Controller
 {

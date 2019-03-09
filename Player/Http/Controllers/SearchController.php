@@ -3,7 +3,7 @@
 namespace Bitaac\Player\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Player\Http\Requests\SearchRequest;
 
 class SearchController extends Controller

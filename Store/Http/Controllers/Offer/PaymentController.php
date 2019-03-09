@@ -5,7 +5,7 @@ namespace Bitaac\Store\Http\Controllers\Offer;
 use Illuminate\Http\Request;
 use Bitaac\Store\Models\Payment;
 use \Facades\Paysterify\Paysterify;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {

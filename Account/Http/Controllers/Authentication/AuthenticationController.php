@@ -5,7 +5,7 @@ namespace Bitaac\Account\Http\Controllers\Authentication;
 use Bitaac;
 use Google2FA;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use PragmaRX\Google2FA\Exceptions\InvalidCharactersException;
 

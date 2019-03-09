@@ -46,7 +46,7 @@ class StoreServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->exceptions = $this->app['App\Exceptions\Handler'];
+        $this->exceptions = $this->app['Bitaac\Core\Exceptions\Handler'];
 
         $this->exceptions->handle(NotFoundProductException::class, function ($e) {
             return new Response(view('bitaac::errors.404'), 404);

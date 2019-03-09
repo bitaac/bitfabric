@@ -2,7 +2,7 @@
 
 namespace Bitaac\Guild\Http\Controllers\Guilds;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class GuildsController extends Controller
 {

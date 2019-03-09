@@ -2,7 +2,7 @@
 
 namespace Bitaac\Guild\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Illuminate\Filesystem\Filesystem;
 
 class ShowController extends Controller

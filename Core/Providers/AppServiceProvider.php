@@ -5,8 +5,9 @@ namespace Bitaac\Core\Providers;
 use Auth;
 use Validator;
 use Bitaac\Core\Console\Commands;
+use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends \App\Providers\AppServiceProvider
+class AppServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -15,8 +16,6 @@ class AppServiceProvider extends \App\Providers\AppServiceProvider
      */
     public function boot()
     {
-        parent::boot();
-
         view()->composer('*', function ($view) {
             $view->with('account', auth()->user());
         });

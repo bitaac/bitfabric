@@ -2,7 +2,7 @@
 
 namespace Bitaac\Guild\Http\Controllers\Guild;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Guild\Http\Requests\Guild\DisbandRequest;
 
 class DisbandController extends Controller

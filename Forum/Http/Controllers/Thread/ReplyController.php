@@ -4,7 +4,7 @@ namespace Bitaac\Forum\Http\Controllers\Thread;
 
 use Illuminate\Http\Request;
 use Bitaac\Core\Rules\OwnsCharacter;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class ReplyController extends Controller
 {

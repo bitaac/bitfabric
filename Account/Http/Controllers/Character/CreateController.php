@@ -2,7 +2,7 @@
 
 namespace Bitaac\Account\Http\Controllers\Character;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Bitaac\Account\Http\Requests\Character\CreateRequest;
 

@@ -5,7 +5,7 @@ namespace Bitaac\Auth\Http\Controllers;
 use Bitaac;
 use Google2FA;
 use Illuminate\Contracts\Auth\Guard;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Auth\Http\Requests\LoginRequest;
 use PragmaRX\Google2FA\Exceptions\SecretKeyTooShortException;
 

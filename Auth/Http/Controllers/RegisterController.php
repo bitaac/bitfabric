@@ -4,7 +4,7 @@ namespace Bitaac\Auth\Http\Controllers;
 
 use Bitaac;
 use Illuminate\Contracts\Auth\Guard;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Auth\Http\Requests\RegisterRequest;
 
 class RegisterController extends Controller

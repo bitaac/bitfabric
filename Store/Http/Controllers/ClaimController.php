@@ -5,7 +5,7 @@ namespace Bitaac\Store\Http\Controllers;
 use Illuminate\Http\Request;
 use Bitaac\Contracts\StoreProduct;
 use Bitaac\Store\Models\StoreOrder;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class ClaimController extends Controller
 {

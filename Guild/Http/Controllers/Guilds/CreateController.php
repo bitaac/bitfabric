@@ -2,7 +2,7 @@
 
 namespace Bitaac\Guild\Http\Controllers\Guilds;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Guild\Http\Requests\Guilds\CreateRequest;
 
 class CreateController extends Controller

@@ -5,6 +5,7 @@ namespace Bitaac\Core\Providers;
 use Bitaac\Contracts;
 use Illuminate\Http\Response;
 use Bitaac\Auth\AuthServiceProvider;
+use Bitaac\Theme\ThemeServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Bitaac\Admin\AdminServiceProvider;
 use Bitaac\Guild\GuildServiceProvider;
@@ -12,6 +13,7 @@ use Bitaac\Store\StoreServiceProvider;
 use Bitaac\Forum\ForumServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Bitaac\Player\PlayerServiceProvider;
+use Bitaac\Laravel\LaravelServiceProvider;
 use Bitaac\Account\AccountServiceProvider;
 use Bitaac\Highscore\HighscoreServiceProvider;
 use Bitaac\Community\CommunityServiceProvider;
@@ -61,6 +63,8 @@ class BitfabricServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../Config' => config_path('bitaac'),
         ], 'bitaac:config');
+
+        $this->loadViewsFrom(app_path('themes/'.config('bitaac.app.theme').'/views'), 'bitaac');
     }
 
     /**
@@ -70,7 +74,7 @@ class BitfabricServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->exceptions = $this->app['App\Exceptions\Handler'];
+        $this->exceptions = $this->app['Bitaac\Core\Exceptions\Handler'];
 
         $aliasloader = AliasLoader::getInstance();
         $aliasloader->alias('Omnipay', \Barryvdh\Omnipay\Facade::class);
@@ -80,11 +84,9 @@ class BitfabricServiceProvider extends ServiceProvider
             $aliasloader->alias('Google2FA', \PragmaRX\Google2FA\Vendor\Laravel\Facade::class);
         }
 
-        //$this->app->register(\Barryvdh\Omnipay\ServiceProvider::class);
         $this->app->register(\Seedster\SeedsterServiceProvider::class);
 
         $this->app->booted(function () {
-            $this->app->register(config('bitaac.app.theme', \Bitaac\ThemeDefault\ThemeDefaultServiceProvider::class));
             $this->app->register(config('bitaac.app.theme-admin', \Bitaac\ThemeAdmin\ThemeAdminServiceProvider::class));
 
             if (file_exists($path = base_path('routes/extensions.php'))) {
@@ -101,6 +103,7 @@ class BitfabricServiceProvider extends ServiceProvider
         });
 
         $this->app->register(HashServiceProvider::class);
+        $this->app->register(LaravelServiceProvider::class);
         $this->app->register(CommunityServiceProvider::class);
         $this->app->register(AppServiceProvider::class);
         $this->app->register(AuthServiceProvider::class);
@@ -112,6 +115,7 @@ class BitfabricServiceProvider extends ServiceProvider
         $this->app->register(StoreServiceProvider::class);
         $this->app->register(GuildServiceProvider::class);
         $this->app->register(AdminServiceProvider::class);
+        $this->app->register(ThemeServiceProvider::class);
 
         foreach ($this->bindingsAndAliases as $alias => $binding) {
             list($abstract, $concrete) = [key($binding), current($binding)];

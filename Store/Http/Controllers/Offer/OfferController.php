@@ -2,7 +2,7 @@
 
 namespace Bitaac\Store\Http\Controllers\Offer;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class OfferController extends Controller
 {

@@ -3,7 +3,7 @@
 namespace Bitaac\Admin\Http\Controllers\Products;
 
 use Bitaac\Contracts\StoreProduct;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class ProductsController extends Controller
 {

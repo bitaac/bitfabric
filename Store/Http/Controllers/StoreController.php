@@ -2,7 +2,7 @@
 
 namespace Bitaac\Store\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class StoreController extends Controller
 {

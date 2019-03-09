@@ -2,7 +2,7 @@
 
 namespace Bitaac\Forum\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Forum\Models\Board;
 
 class ForumController extends Controller

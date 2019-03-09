@@ -2,7 +2,7 @@
 
 namespace Bitaac\Community\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 use Bitaac\Community\Http\Responses\IndexResponse;
 
 class IndexController extends Controller

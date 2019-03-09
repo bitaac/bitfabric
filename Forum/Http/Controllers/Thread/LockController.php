@@ -3,7 +3,7 @@
 namespace Bitaac\Forum\Http\Controllers\Thread;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Bitaac\Laravel\Http\Controllers\Controller;
 
 class LockController extends Controller
 {
