@@ -19,7 +19,7 @@ class JoinController extends Controller
             return $value->guild_id != $guild->id or $value->player->account_id != Auth::id();
         });
 
-        return view('bitaac::guilds.guild.member.join')->with(compact('guild', 'invites'));
+        return view('guilds.guild.member.join')->with(compact('guild', 'invites'));
     }
 
     /**

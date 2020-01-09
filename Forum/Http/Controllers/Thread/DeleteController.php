@@ -25,7 +25,7 @@ class DeleteController extends Controller
      */
     public function form($board, $thread)
     {
-        return view('bitaac::forum.thread.delete', [
+        return view('forum.thread.delete', [
             'thread' => $thread,
             'board'  => $board,
         ]);

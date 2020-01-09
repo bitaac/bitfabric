@@ -33,7 +33,7 @@ class UnlockController extends Controller
             ]));
         }
 
-        return view('bitaac::forum.thread.unlock', compact('board', 'thread'));
+        return view('forum.thread.unlock', compact('board', 'thread'));
     }
 
     /**

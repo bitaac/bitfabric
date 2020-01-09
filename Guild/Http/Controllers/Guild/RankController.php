@@ -14,7 +14,7 @@ class RankController extends Controller
      */
     public function form($guild)
     {
-        return view('bitaac::guilds.guild.rank.edit')->with(compact('guild'));
+        return view('guilds.guild.rank.edit')->with(compact('guild'));
     }
 
     /**

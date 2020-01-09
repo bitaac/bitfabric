@@ -49,7 +49,7 @@ class StoreServiceProvider extends ServiceProvider
         $this->exceptions = $this->app['Bitaac\Core\Exceptions\Handler'];
 
         $this->exceptions->handle(NotFoundProductException::class, function ($e) {
-            return new Response(view('bitaac::errors.404'), 404);
+            return new Response(view('errors.404'), 404);
         });
 
         $this->app['router']->aliasMiddleware('can.claim', Middleware\CanClaimMiddleware::class);

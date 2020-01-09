@@ -17,7 +17,7 @@ class ClaimController extends Controller
      */
     public function form(StoreProduct $product)
     {
-        return view('bitaac::store.claim')->with(compact('product'));
+        return view('store.claim')->with(compact('product'));
     }
 
     /**

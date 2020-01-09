@@ -19,7 +19,7 @@ class HighscoreController extends Controller
 
         $vocation = vocation($vocation, true);
 
-        return view('bitaac::community.highscores')->with(compact('highscore', 'skill', 'vocation'));
+        return view('community.highscores')->with(compact('highscore', 'skill', 'vocation'));
     }
 
     /**

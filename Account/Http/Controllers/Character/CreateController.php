@@ -28,7 +28,7 @@ class CreateController extends Controller
      */
     public function form()
     {
-        return view('bitaac::account.character.create');
+        return view('account.character.create');
     }
 
     /**

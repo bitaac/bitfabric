@@ -39,7 +39,7 @@ class GuildServiceProvider extends ServiceProvider
         );
 
         $this->exceptions->handle(NotFoundGuildException::class, function ($e) {
-            return new Response(view('bitaac::errors.404'), 404);
+            return new Response(view('errors.404'), 404);
         });
 
         $this->app->register(RouteServiceProvider::class);

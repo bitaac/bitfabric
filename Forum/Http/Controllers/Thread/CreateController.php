@@ -26,7 +26,7 @@ class CreateController extends Controller
      */
     public function form(Board $board)
     {
-        return view('bitaac::forum.thread.create', [
+        return view('forum.thread.create', [
             'board' => $board,
         ]);
     }

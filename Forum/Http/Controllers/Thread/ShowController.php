@@ -25,7 +25,7 @@ class ShowController extends Controller
             $post->save();
         }
 
-        return view('bitaac::forum.thread.show', [
+        return view('forum.thread.show', [
             'thread' => $post,
             'board'  => $board,
             'posts'  => $posts,

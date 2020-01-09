@@ -23,7 +23,7 @@ class DeathsController extends Controller
             $deaths = $deaths->limit($limit)->get();
         }
 
-        return view('bitaac::community.deaths')->with([
+        return view('community.deaths')->with([
             'deaths' => $deaths,
         ]);
     }

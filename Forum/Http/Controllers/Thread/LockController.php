@@ -33,7 +33,7 @@ class LockController extends Controller
             ]));
         }
 
-        return view('bitaac::forum.thread.lock', [
+        return view('forum.thread.lock', [
             'thread' => $thread,
             'board'  => $board,
         ]);

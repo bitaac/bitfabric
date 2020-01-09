@@ -29,7 +29,7 @@ class UndeleteController extends Controller
             return redirect()->route('account');
         }
 
-        return view('bitaac::account.character.undelete')->with([
+        return view('account.character.undelete')->with([
             'player' => $player,
         ]);
     }

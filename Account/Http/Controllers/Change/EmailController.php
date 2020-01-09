@@ -29,7 +29,7 @@ class EmailController extends Controller
      */
     public function form()
     {
-        return view('bitaac::account.change.email');
+        return view('account.change.email');
     }
 
     /**

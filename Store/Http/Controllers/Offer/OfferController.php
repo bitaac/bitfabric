@@ -13,6 +13,6 @@ class OfferController extends Controller
      */
     public function index()
     {
-        return view('bitaac::store.offers.index');
+        return view('store.offers.index');
     }
 }

@@ -15,7 +15,7 @@ class ShowController extends Controller
     {
         $account = auth()->user();
 
-        return view('bitaac::guilds.guild.show')->with([
+        return view('guilds.guild.show')->with([
             'guild' => $guild,
             'hasLeader' => $account and $account->hasLeader($guild),
             'hasOwner' => $account and $account->hasOwner($guild),

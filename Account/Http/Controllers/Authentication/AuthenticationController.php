@@ -42,14 +42,14 @@ class AuthenticationController extends Controller
         $account = $this->auth->user();
 
         $secret = $account->secret ? $account->secret : Google2FA::generateSecretKey();
-        
+
         $google2fa_url = Google2FA::getQRCodeGoogleUrl(
             'bitaac',
             $account->name,
             $account->bitaac->secret
         );
 
-        return view('bitaac::account.authentication.index')->with([
+        return view('account.authentication.index')->with([
             'google2fa_url' => $google2fa_url,
         ]);
     }

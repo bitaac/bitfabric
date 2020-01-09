@@ -14,7 +14,7 @@ class ForumController extends Controller
      */
     public function index()
     {
-        return view('bitaac::forum.index', [
+        return view('forum.index', [
             'boards' => Board::orderBy('order')->get(),
         ]);
     }

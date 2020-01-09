@@ -15,7 +15,7 @@ class SearchController extends Controller
      */
     public function form()
     {
-        return view('bitaac::character.search');
+        return view('character.search');
     }
 
     /**

@@ -27,6 +27,6 @@ class CharacterController extends Controller
     {
         $deaths = $player->deaths;
 
-        return view('bitaac::character.view')->with(compact('player', 'deaths'));
+        return view('character.view')->with(compact('player', 'deaths'));
     }
 }

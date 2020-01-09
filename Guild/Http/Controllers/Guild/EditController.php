@@ -15,7 +15,7 @@ class EditController extends Controller
      */
     public function form($guild)
     {
-        return view('bitaac::guilds.guild.edit')->with(compact('guild'));
+        return view('guilds.guild.edit')->with(compact('guild'));
     }
 
     /**

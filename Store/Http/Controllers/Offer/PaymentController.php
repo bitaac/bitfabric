@@ -22,7 +22,7 @@ class PaymentController extends Controller
             return redirect('/store/offers');
         }
 
-        return view('bitaac::store.offers.form')->with([
+        return view('store.offers.form')->with([
             'gateway' => (object) $gateway,
         ]);
     }

@@ -31,7 +31,7 @@ class LoginController extends Controller
      */
     public function form()
     {
-        return view('bitaac::auth.login');
+        return view('auth.login');
     }
 
     /**

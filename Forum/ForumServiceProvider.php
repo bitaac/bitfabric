@@ -44,11 +44,11 @@ class ForumServiceProvider extends ServiceProvider
         );
 
         $this->exceptions->handle(Exceptions\NotFoundBoardException::class, function ($e) {
-            return new Response(view('bitaac::errors.404'), 404);
+            return new Response(view('errors.404'), 404);
         });
 
         $this->exceptions->handle(Exceptions\NotFoundThreadException::class, function ($e) {
-            return new Response(view('bitaac::errors.404'), 404);
+            return new Response(view('errors.404'), 404);
         });
 
         $this->app->register(RouteServiceProvider::class);

@@ -27,7 +27,7 @@ class LogoutController extends Controller
      */
     public function index()
     {
-        return view('bitaac::account.logout');
+        return view('account.logout');
     }
 
     /**

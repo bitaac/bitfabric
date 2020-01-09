@@ -27,7 +27,7 @@ class ReplyController extends Controller
      */
     public function index($board, $thread)
     {
-        return view('bitaac::forum.thread.reply', [
+        return view('forum.thread.reply', [
             'thread' => $thread,
             'board'  => $board,
         ]);

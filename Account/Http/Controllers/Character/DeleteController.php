@@ -18,7 +18,7 @@ class DeleteController extends Controller
     public function __construct(Guard $auth)
     {
         $this->middleware(['auth']);
-        
+
         $this->auth = $auth;
     }
 
@@ -29,7 +29,7 @@ class DeleteController extends Controller
      */
     public function form()
     {
-        return view('bitaac::account.character.delete');
+        return view('account.character.delete');
     }
 
     /**

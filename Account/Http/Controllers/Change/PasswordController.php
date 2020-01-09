@@ -17,7 +17,7 @@ class PasswordController extends Controller
     public function __construct(Guard $auth)
     {
         $this->middleware(['auth']);
-        
+
         $this->auth = $auth;
     }
 
@@ -28,7 +28,7 @@ class PasswordController extends Controller
      */
     public function form()
     {
-        return view('bitaac::account.change.password');
+        return view('account.change.password');
     }
 
     /**

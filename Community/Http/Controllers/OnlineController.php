@@ -13,7 +13,7 @@ class OnlineController extends Controller
      */
     public function index()
     {
-        return view('bitaac::community.online')->with([
+        return view('community.online')->with([
             'players' => getOnlinePlayers(),
         ]);
     }

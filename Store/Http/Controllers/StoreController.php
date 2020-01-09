@@ -15,6 +15,6 @@ class StoreController extends Controller
     {
         $products = app('store.product')->all();
 
-        return view('bitaac::store.index')->with(compact('products'));
+        return view('store.index')->with(compact('products'));
     }
 }

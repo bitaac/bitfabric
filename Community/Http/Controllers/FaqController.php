@@ -13,6 +13,6 @@ class FaqController extends Controller
      */
     public function index()
     {
-        return view('bitaac::community.faq');
+        return view('community.faq');
     }
 }

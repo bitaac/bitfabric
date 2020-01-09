@@ -63,8 +63,6 @@ class BitfabricServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../Config' => config_path('bitaac'),
         ], 'bitaac:config');
-
-        $this->loadViewsFrom(app_path('themes/'.config('bitaac.app.theme').'/views'), 'bitaac');
     }
 
     /**
@@ -74,6 +72,10 @@ class BitfabricServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        config([
+            'view.paths' => [app_path('themes/'.config('bitaac.app.theme').'/views')]
+        ]);
+
         $this->exceptions = $this->app['Bitaac\Core\Exceptions\Handler'];
 
         $aliasloader = AliasLoader::getInstance();
@@ -94,11 +96,11 @@ class BitfabricServiceProvider extends ServiceProvider
             }
 
             $this->exceptions->handle(ModelNotFoundException::class, function ($e) {
-                return new Response(view('bitaac::errors.404'), 404);
+                return new Response(view('errors.404'), 404);
             });
 
             $this->exceptions->handle(NotFoundHttpException::class, function ($e) {
-                return new Response(view('bitaac::errors.404'), 404);
+                return new Response(view('errors.404'), 404);
             });
         });
 

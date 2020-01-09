@@ -14,7 +14,7 @@ class LeaveController extends Controller
      */
     public function form($guild)
     {
-        return view('bitaac::guilds.guild.member.leave')->with(compact('guild'));
+        return view('guilds.guild.member.leave')->with(compact('guild'));
     }
 
     /**

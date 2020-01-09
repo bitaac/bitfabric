@@ -15,7 +15,7 @@ class DisbandController extends Controller
      */
     public function form($guild)
     {
-        return view('bitaac::guilds.guild.disband')->with(compact('guild'));
+        return view('guilds.guild.disband')->with(compact('guild'));
     }
 
     /**

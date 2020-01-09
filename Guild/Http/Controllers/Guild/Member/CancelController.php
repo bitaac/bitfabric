@@ -14,7 +14,7 @@ class CancelController extends Controller
      */
     public function form($guild)
     {
-        return view('bitaac::guilds.guild.member.cancel')->with(compact('guild'));
+        return view('guilds.guild.member.cancel')->with(compact('guild'));
     }
 
     /**

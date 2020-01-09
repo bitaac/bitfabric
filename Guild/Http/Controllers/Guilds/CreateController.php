@@ -14,7 +14,7 @@ class CreateController extends Controller
      */
     public function form()
     {
-        return view('bitaac::guilds.create');
+        return view('guilds.create');
     }
 
     /**

@@ -15,7 +15,7 @@ class ShowController extends Controller
      */
     public function index(Board $board)
     {
-        return view('bitaac::forum.board.show', [
+        return view('forum.board.show', [
             'board'   => $board,
             'threads' => $board->threads()->paginate(10),
         ]);

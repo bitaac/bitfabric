@@ -13,6 +13,6 @@ class TermsController extends Controller
      */
     public function get()
     {
-        return view('bitaac::community.terms');
+        return view('community.terms');
     }
 }

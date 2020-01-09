@@ -29,7 +29,7 @@ class RegisterController extends Controller
      */
     public function form()
     {
-        return view('bitaac::auth.register');
+        return view('auth.register');
     }
 
     /**

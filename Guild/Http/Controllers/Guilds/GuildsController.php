@@ -15,6 +15,6 @@ class GuildsController extends Controller
     {
         $guilds = app('guild')->all();
 
-        return view('bitaac::guilds.index')->with(compact('guilds'));
+        return view('guilds.index')->with(compact('guilds'));
     }
 }

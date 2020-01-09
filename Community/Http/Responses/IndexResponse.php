@@ -25,7 +25,7 @@ class IndexResponse implements Responsable
      */
     public function toResponse($request)
     {
-        return view('bitaac::home.index')->with([
+        return view('home.index')->with([
             'articles' => $this->articles(),
         ]);
     }

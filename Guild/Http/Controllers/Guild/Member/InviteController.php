@@ -14,7 +14,7 @@ class InviteController extends Controller
      */
     public function form($guild)
     {
-        return view('bitaac::guilds.guild.member.invite')->with(compact('guild'));
+        return view('guilds.guild.member.invite')->with(compact('guild'));
     }
 
     /**

@@ -37,7 +37,7 @@ class PlayerServiceProvider extends ServiceProvider
         );
 
         $this->exceptions->handle(NotFoundPlayerException::class, function ($e) {
-            return new Response(view('bitaac::errors.404'), 404);
+            return new Response(view('errors.404'), 404);
         });
 
         $this->app['router']->aliasMiddleware('character.exists', Middleware\CharacterExistsMiddleware::class);
