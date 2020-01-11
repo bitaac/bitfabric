@@ -23,7 +23,7 @@ class ThemeAssetsController extends Controller
         try {
             $files = [];
 
-            $themePath = app_path('themes/default/public');
+            $themePath = app_path('themes/'.config('bitaac.app.theme').'/public');
 
             foreach (Finder::create()->files()->in($themePath) as $file) {
                 $directory = $this->getNestedDirectory($file, $themePath);
