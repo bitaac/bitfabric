@@ -119,6 +119,10 @@ class BitfabricServiceProvider extends ServiceProvider
         $this->app->register(AdminServiceProvider::class);
         $this->app->register(ThemeServiceProvider::class);
 
+        foreach (config('bitaac.app.providers', []) as $provider) {
+            $this->app->register($provider);
+        }
+
         foreach ($this->bindingsAndAliases as $alias => $binding) {
             list($abstract, $concrete) = [key($binding), current($binding)];
 
