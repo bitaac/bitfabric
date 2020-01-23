@@ -21,6 +21,10 @@
         },
         "files": [
             "Core/helpers.php"
+        ],
+        "classmap": [
+            "Laravel/database/seeds",
+            "Laravel/database/factories"
         ]
     },
     "extra": {
