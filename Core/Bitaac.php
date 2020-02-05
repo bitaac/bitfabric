@@ -28,6 +28,13 @@ class Bitaac
     protected $accountPasswordField = 'password';
 
     /**
+     * Holding the account creation field.
+     *
+     * @var string
+     */
+    protected $accountCreationField = 'creation';
+
+    /**
      * Holding all overwritten rules.
      *
      * @var array
@@ -95,6 +102,26 @@ class Bitaac
     public function getAccountPasswordField()
     {
         return $this->accountPasswordField;
+    }
+
+    /**
+     * Set the account creation field.
+     *
+     * @return string
+     */
+    public function setAccountCreationField($field)
+    {
+        $this->accountCreationField = $field;
+    }
+
+    /**
+     * Get the account creation field.
+     *
+     * @return string
+     */
+    public function getAccountCreationField()
+    {
+        return $this->accountCreationField;
     }
 
     /**

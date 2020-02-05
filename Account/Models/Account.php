@@ -13,11 +13,11 @@ class Account extends Model implements Contract
     use Authenticatable;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that aren't mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'secret', 'type', 'premdays', 'lastday', 'email', 'password', 'creation'];
+    protected $guarded = [];
 
     /**
      * The table associated with the model.

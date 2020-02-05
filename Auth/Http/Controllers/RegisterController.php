@@ -41,10 +41,16 @@ class RegisterController extends Controller
     public function post(RegisterRequest $request)
     {
         $data = $request->only([
-            'name', 'email', 'password'
+            'email', 'password'
         ]);
 
-        $account = app('account')->create(array_merge($data, ['creation' => time()]));
+        if ($creation = Bitaac::getAccountCreationField()) {
+            $data = array_merge($data, [$creation => time()]);
+        }
+
+        $account = app('account')->create(array_merge($data, [
+            Bitaac::getAccountNameField() => $request->name,
+        ]));
 
         $this->auth->login($account);
 

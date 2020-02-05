@@ -119,10 +119,6 @@ class BitfabricServiceProvider extends ServiceProvider
         $this->app->register(AdminServiceProvider::class);
         $this->app->register(ThemeServiceProvider::class);
 
-        foreach (config('bitaac.app.providers', []) as $provider) {
-            $this->app->register($provider);
-        }
-
         foreach ($this->bindingsAndAliases as $alias => $binding) {
             list($abstract, $concrete) = [key($binding), current($binding)];
 
@@ -149,5 +145,9 @@ class BitfabricServiceProvider extends ServiceProvider
         $this->app->singleton('command.migrate', function ($app) {
             return new MigrateCommand($app['migrator']);
         });
+
+        foreach (config('bitaac.app.providers', []) as $provider) {
+            $this->app->register($provider);
+        }
     }
 }
