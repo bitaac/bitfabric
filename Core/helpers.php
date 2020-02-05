@@ -288,10 +288,20 @@ if (! function_exists('isServerOnline')) {
      */
     function isServerOnline()
     {
-        @$sock = fsockopen(config('bitaac.server.ip'), config('bitaac.server.port'), $errno, $errstr, 1);
+        return Cache::remember('bitaac:server:status', now()->addSeconds(30), function () {
+            @$sock = fsockopen(config('bitaac.server.ip'), config('bitaac.server.port'), $errno, $errstr, 1);
 
-        return Cache::remember('bitaac:server:status', 10, function () use ($sock) {
-            return (boolean) $sock;
+            if (!$sock) {
+                return false;
+            }
+
+            $info = chr(6).chr(0).chr(255).chr(255).'info';
+            fwrite($sock, $info);
+            $data='';
+            while (!feof($sock))$data .= fgets($sock, 1024);
+            fclose($sock);
+
+            return true;
         });
     }
 }
